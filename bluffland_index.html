@@ -1,0 +1,1518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Bluffland Coalition — Conservation & Recreation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    /* ─────────────────────────────────────────
+       TOKENS & RESET
+    ───────────────────────────────────────── */
+    :root {
+      --ink:        #0f1a0f;
+      --forest:     #1c3320;
+      --moss:       #2e5435;
+      --fern:       #4a7c59;
+      --sage:       #7aaa85;
+      --mist:       #c8deca;
+      --cream:      #f4f0e6;
+      --parchment:  #ede8da;
+      --stone:      #8a8478;
+      --gold:       #b8892a;
+      --gold-pale:  #e6c97a;
+      --white:      #ffffff;
+
+      --f-display: 'Cormorant Garamond', Georgia, serif;
+      --f-body:    'Outfit', system-ui, sans-serif;
+
+      --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    body {
+      font-family: var(--f-body);
+      color: var(--ink);
+      background: var(--cream);
+      overflow-x: hidden;
+      cursor: default;
+    }
+
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+
+    /* ─────────────────────────────────────────
+       NAV
+    ───────────────────────────────────────── */
+    .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 900;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 3rem;
+      height: 68px;
+      transition: background 0.4s var(--ease), border-color 0.4s;
+    }
+
+    .nav.scrolled {
+      background: rgba(15, 26, 15, 0.96);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--white);
+    }
+
+    .nav-logo-mark {
+      width: 32px;
+      height: 32px;
+      flex-shrink: 0;
+    }
+
+    .nav-logo-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.1;
+    }
+
+    .nav-logo-text strong {
+      font-family: var(--f-display);
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+
+    .nav-logo-text span {
+      font-size: 0.63rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      opacity: 0.55;
+      font-weight: 300;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+    }
+
+    .nav-links a {
+      color: rgba(255,255,255,0.7);
+      font-size: 0.8rem;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--white); }
+
+    .nav-cta {
+      background: var(--gold) !important;
+      color: var(--white) !important;
+      padding: 0.5rem 1.25rem;
+      border-radius: 2px;
+      font-weight: 500 !important;
+      opacity: 1 !important;
+      transition: background 0.2s !important;
+    }
+
+    .nav-cta:hover { background: var(--gold-pale) !important; color: var(--ink) !important; }
+
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 0.25rem;
+    }
+
+    /* ─────────────────────────────────────────
+       HERO
+    ───────────────────────────────────────── */
+    .hero {
+      position: relative;
+      height: 100vh;
+      min-height: 700px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://www.oratrails.org/wp-content/uploads/2025/01/BC-Header-Image.png');
+      background-size: cover;
+      background-position: center center;
+      transform: scale(1.04);
+      animation: heroZoom 18s ease-out forwards;
+    }
+
+    @keyframes heroZoom {
+      to { transform: scale(1.0); }
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to top, rgba(10,18,10,0.92) 0%, rgba(10,18,10,0.45) 45%, rgba(10,18,10,0.15) 100%),
+        linear-gradient(135deg, rgba(28,51,32,0.4) 0%, transparent 60%);
+    }
+
+    /* Contour lines texture */
+    .hero-contours {
+      position: absolute;
+      inset: 0;
+      opacity: 0.06;
+      background-image:
+        repeating-radial-gradient(ellipse 180% 60% at 40% 80%,
+          transparent 0px, transparent 18px,
+          rgba(255,255,255,0.8) 18px, rgba(255,255,255,0.8) 19px
+        );
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 0 6rem 7rem;
+      max-width: 1100px;
+      animation: heroFadeUp 1.2s 0.3s var(--ease) both;
+    }
+
+    @keyframes heroFadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-eyebrow-line {
+      width: 40px;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    .hero-eyebrow-text {
+      font-size: 0.7rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold-pale);
+      font-weight: 400;
+    }
+
+    .hero-headline {
+      font-family: var(--f-display);
+      font-size: clamp(3.5rem, 7.5vw, 7rem);
+      font-weight: 300;
+      line-height: 1.0;
+      color: var(--white);
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.01em;
+    }
+
+    .hero-headline em {
+      font-style: italic;
+      color: var(--mist);
+    }
+
+    .hero-sub {
+      font-size: clamp(0.95rem, 1.5vw, 1.15rem);
+      color: rgba(255,255,255,0.6);
+      font-weight: 300;
+      max-width: 520px;
+      line-height: 1.8;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: var(--gold);
+      color: var(--white);
+      padding: 0.85rem 2rem;
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border: none;
+      border-radius: 2px;
+      cursor: pointer;
+      transition: background 0.25s, transform 0.2s;
+      font-family: var(--f-body);
+    }
+
+    .btn-primary:hover { background: #c9981f; transform: translateY(-1px); }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: rgba(255,255,255,0.7);
+      font-size: 0.8rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border-bottom: 1px solid rgba(255,255,255,0.25);
+      padding-bottom: 2px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .btn-ghost:hover { color: white; border-color: white; }
+
+    /* Scroll indicator */
+    .hero-scroll {
+      position: absolute;
+      bottom: 2.5rem;
+      right: 3rem;
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      animation: heroFadeUp 1.2s 1s var(--ease) both;
+    }
+
+    .hero-scroll span {
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+      writing-mode: vertical-rl;
+    }
+
+    .hero-scroll-bar {
+      width: 1px;
+      height: 60px;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.4), transparent);
+      animation: scrollDrop 2s 1.5s ease-in-out infinite;
+    }
+
+    @keyframes scrollDrop {
+      0%   { transform: scaleY(0); transform-origin: top; opacity: 1; }
+      50%  { transform: scaleY(1); transform-origin: top; opacity: 1; }
+      51%  { transform: scaleY(1); transform-origin: bottom; opacity: 1; }
+      100% { transform: scaleY(0); transform-origin: bottom; opacity: 0; }
+    }
+
+    /* Stats bar */
+    .hero-stats {
+      position: absolute;
+      bottom: 0;
+      left: 0; right: 0;
+      z-index: 3;
+      display: flex;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .hero-stat {
+      flex: 1;
+      padding: 1.25rem 2rem;
+      border-right: 1px solid rgba(255,255,255,0.08);
+      background: rgba(15,26,15,0.7);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      animation: heroFadeUp 1s var(--ease) both;
+    }
+
+    .hero-stat:last-child { border-right: none; }
+    .hero-stat:nth-child(1) { animation-delay: 0.7s; }
+    .hero-stat:nth-child(2) { animation-delay: 0.8s; }
+    .hero-stat:nth-child(3) { animation-delay: 0.9s; }
+    .hero-stat:nth-child(4) { animation-delay: 1.0s; }
+
+    .hero-stat-num {
+      font-family: var(--f-display);
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: var(--white);
+      line-height: 1;
+      margin-bottom: 0.2rem;
+    }
+
+    .hero-stat-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      font-weight: 300;
+    }
+
+    /* ─────────────────────────────────────────
+       SECTION LABELS
+    ───────────────────────────────────────── */
+    .label {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.65rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      font-weight: 500;
+      color: var(--fern);
+      margin-bottom: 1rem;
+    }
+
+    .label-line {
+      width: 28px;
+      height: 1px;
+      background: var(--fern);
+    }
+
+    .label.light { color: var(--mist); }
+    .label.light .label-line { background: var(--mist); }
+
+    .label.gold-col { color: var(--gold); }
+    .label.gold-col .label-line { background: var(--gold); }
+
+    /* ─────────────────────────────────────────
+       MISSION SECTION
+    ───────────────────────────────────────── */
+    .mission {
+      background: var(--cream);
+      padding: 7rem 0 0;
+    }
+
+    .mission-intro {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: end;
+      padding: 0 6rem;
+      margin-bottom: 5rem;
+    }
+
+    .mission-headline {
+      font-family: var(--f-display);
+      font-size: clamp(2.4rem, 4.5vw, 4rem);
+      font-weight: 300;
+      line-height: 1.1;
+      color: var(--forest);
+      letter-spacing: -0.01em;
+    }
+
+    .mission-headline em {
+      font-style: italic;
+      color: var(--moss);
+    }
+
+    .mission-body {
+      color: var(--stone);
+      font-size: 0.95rem;
+      line-height: 1.85;
+      font-weight: 300;
+      padding-top: 1rem;
+    }
+
+    .mission-body p + p { margin-top: 1rem; }
+
+    /* Cards */
+    .mission-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .mission-card {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 3/4;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 2.5rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.5s var(--ease);
+    }
+
+    .mission-card:hover { transform: scale(1.01); }
+
+    .card-bg {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      transition: transform 0.7s var(--ease);
+    }
+
+    .mission-card:hover .card-bg { transform: scale(1.06); }
+
+    .card-bg-1 {
+      background-image: url('https://www.mississippivalleyconservancy.org/sites/default/files/styles/juicebox_large/public/la-crosse-blufflands.jpg?itok=8zvfGEjE');
+    }
+    .card-bg-2 {
+      background-image: url('https://www.mississippivalleyconservancy.org/sites/default/files/styles/juicebox_large/public/cardinal-bluff.jpg?itok=ErBzlhX-');
+    }
+    .card-bg-3 {
+      background-image: url('https://www.mississippivalleyconservancy.org/sites/default/files/styles/juicebox_large/public/eagle-eye.jpg?itok=b1RXvmQg');
+    }
+
+    .card-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(8,16,8,0.92) 0%, rgba(8,16,8,0.3) 55%, rgba(8,16,8,0.05) 100%);
+      transition: opacity 0.4s;
+    }
+
+    .mission-card:hover .card-overlay {
+      background: linear-gradient(to top, rgba(8,16,8,0.96) 0%, rgba(8,16,8,0.45) 55%, rgba(8,16,8,0.1) 100%);
+    }
+
+    .card-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .card-num {
+      font-family: var(--f-display);
+      font-size: 0.8rem;
+      color: var(--gold-pale);
+      margin-bottom: 0.5rem;
+      font-weight: 300;
+    }
+
+    .card-title {
+      font-family: var(--f-display);
+      font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+      font-weight: 300;
+      color: var(--white);
+      line-height: 1.1;
+      margin-bottom: 0.75rem;
+    }
+
+    .card-title em {
+      font-style: italic;
+    }
+
+    .card-desc {
+      font-size: 0.83rem;
+      color: rgba(255,255,255,0.55);
+      font-weight: 300;
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+      max-width: 260px;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s var(--ease), opacity 0.4s;
+      opacity: 0;
+    }
+
+    .mission-card:hover .card-desc {
+      max-height: 120px;
+      opacity: 1;
+    }
+
+    .card-link-row {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold-pale);
+      transition: gap 0.3s;
+    }
+
+    .mission-card:hover .card-link-row { gap: 1rem; }
+
+    .card-link-arrow {
+      width: 20px;
+      height: 1px;
+      background: var(--gold-pale);
+      position: relative;
+      transition: width 0.3s;
+    }
+
+    .card-link-arrow::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: -3px;
+      width: 6px;
+      height: 6px;
+      border-right: 1px solid var(--gold-pale);
+      border-top: 1px solid var(--gold-pale);
+      transform: rotate(45deg);
+    }
+
+    .mission-card:hover .card-link-arrow { width: 30px; }
+
+    /* ─────────────────────────────────────────
+       TRAVERSE SECTION
+    ───────────────────────────────────────── */
+    .traverse {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .traverse-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 90vh;
+    }
+
+    /* Left: image */
+    .traverse-visual {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .traverse-img {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://www.oratrails.org/wp-content/uploads/2022/08/Bluffland-Trail-.png');
+      background-size: cover;
+      background-position: center;
+      transition: transform 0.8s var(--ease);
+    }
+
+    .traverse-visual:hover .traverse-img { transform: scale(1.04); }
+
+    .traverse-img-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, rgba(15,26,15,0.3), rgba(15,26,15,0) 70%),
+                  linear-gradient(to top, rgba(15,26,15,0.5) 0%, transparent 40%);
+    }
+
+    /* Decorative route line on image */
+    .traverse-route-svg {
+      position: absolute;
+      bottom: 2rem;
+      left: 2rem;
+      width: 120px;
+      opacity: 0.6;
+    }
+
+    /* Right: text */
+    .traverse-text {
+      background: var(--forest);
+      padding: 6rem 5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .traverse-headline {
+      font-family: var(--f-display);
+      font-size: clamp(2.8rem, 4.5vw, 4.5rem);
+      font-weight: 300;
+      line-height: 1.0;
+      color: var(--white);
+      margin-bottom: 2rem;
+      letter-spacing: -0.01em;
+    }
+
+    .traverse-headline em {
+      font-style: italic;
+      color: var(--mist);
+      display: block;
+    }
+
+    .traverse-body {
+      color: rgba(255,255,255,0.55);
+      font-size: 0.92rem;
+      line-height: 1.85;
+      font-weight: 300;
+      margin-bottom: 3rem;
+    }
+
+    .traverse-body p + p { margin-top: 1rem; }
+
+    .traverse-specs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.07);
+      margin-bottom: 3rem;
+    }
+
+    .traverse-spec {
+      padding: 1.25rem 1rem;
+      background: rgba(255,255,255,0.03);
+    }
+
+    .traverse-spec-val {
+      font-family: var(--f-display);
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: var(--white);
+      line-height: 1;
+      margin-bottom: 0.25rem;
+    }
+
+    .traverse-spec-key {
+      font-size: 0.62rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+    }
+
+    /* Route map */
+    .traverse-map {
+      margin-bottom: 3rem;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 2px;
+      overflow: hidden;
+      background: rgba(0,0,0,0.2);
+      padding: 1.5rem 2rem;
+    }
+
+    .traverse-map-title {
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+      margin-bottom: 1.2rem;
+    }
+
+    .route-stops {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .route-stop {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.5rem 0;
+      position: relative;
+    }
+
+    .route-stop:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      left: 9px;
+      top: calc(50% + 8px);
+      width: 1px;
+      height: calc(100% - 4px);
+      background: rgba(255,255,255,0.12);
+    }
+
+    .stop-dot {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.05);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .stop-dot.start { border-color: var(--sage); background: rgba(122,170,133,0.15); }
+    .stop-dot.end   { border-color: var(--gold); background: rgba(184,137,42,0.15); }
+
+    .stop-dot-inner {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.25);
+    }
+
+    .stop-dot.start .stop-dot-inner { background: var(--sage); }
+    .stop-dot.end   .stop-dot-inner { background: var(--gold); }
+
+    .stop-label {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.5);
+      font-weight: 300;
+    }
+
+    .stop-label strong {
+      color: rgba(255,255,255,0.85);
+      font-weight: 400;
+      display: block;
+      font-size: 0.85rem;
+    }
+
+    /* ─────────────────────────────────────────
+       CONTACT SECTION
+    ───────────────────────────────────────── */
+    .contact {
+      background: var(--parchment);
+      padding: 8rem 6rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8rem;
+      align-items: start;
+    }
+
+    .contact-text {}
+
+    .contact-headline {
+      font-family: var(--f-display);
+      font-size: clamp(2.5rem, 4vw, 3.8rem);
+      font-weight: 300;
+      line-height: 1.05;
+      color: var(--forest);
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.01em;
+    }
+
+    .contact-headline em {
+      font-style: italic;
+    }
+
+    .contact-body {
+      color: var(--stone);
+      font-size: 0.92rem;
+      line-height: 1.85;
+      font-weight: 300;
+      margin-bottom: 2.5rem;
+    }
+
+    .contact-ways {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .contact-way {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid rgba(46,84,53,0.12);
+    }
+
+    .contact-way:last-child { border-bottom: none; }
+
+    .way-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 2px;
+      background: var(--moss);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 1rem;
+    }
+
+    .way-text strong {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--forest);
+      margin-bottom: 0.2rem;
+    }
+
+    .way-text p {
+      font-size: 0.82rem;
+      color: var(--stone);
+      font-weight: 300;
+      line-height: 1.5;
+    }
+
+    /* Form */
+    .contact-form-wrap {
+      padding-top: 0.5rem;
+    }
+
+    .form-title {
+      font-family: var(--f-display);
+      font-size: 1.4rem;
+      font-weight: 400;
+      color: var(--forest);
+      margin-bottom: 2rem;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+    }
+
+    .form-field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    .form-field.full { grid-column: 1 / -1; }
+
+    .form-field label {
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--stone);
+      font-weight: 500;
+    }
+
+    .form-field input,
+    .form-field select,
+    .form-field textarea {
+      background: var(--white);
+      border: 1px solid rgba(46,84,53,0.18);
+      border-radius: 2px;
+      padding: 0.75rem 1rem;
+      font-family: var(--f-body);
+      font-size: 0.88rem;
+      font-weight: 300;
+      color: var(--ink);
+      outline: none;
+      transition: border-color 0.2s;
+      appearance: none;
+    }
+
+    .form-field input::placeholder,
+    .form-field textarea::placeholder { color: rgba(138,132,120,0.5); }
+
+    .form-field input:focus,
+    .form-field select:focus,
+    .form-field textarea:focus {
+      border-color: var(--moss);
+    }
+
+    .form-field textarea { resize: vertical; min-height: 110px; }
+    .form-field select option { background: var(--white); }
+
+    .form-submit {
+      grid-column: 1 / -1;
+      margin-top: 0.5rem;
+    }
+
+    .form-submit .btn-primary {
+      width: 100%;
+      justify-content: center;
+      background: var(--forest);
+    }
+
+    .form-submit .btn-primary:hover { background: var(--moss); }
+
+    .form-success {
+      display: none;
+      background: var(--moss);
+      color: white;
+      padding: 1rem 1.25rem;
+      border-radius: 2px;
+      font-size: 0.85rem;
+      text-align: center;
+      grid-column: 1 / -1;
+    }
+
+    /* ─────────────────────────────────────────
+       FOOTER
+    ───────────────────────────────────────── */
+    .footer {
+      background: var(--ink);
+      padding: 4rem 6rem 2.5rem;
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 4rem;
+      padding-bottom: 3rem;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      margin-bottom: 2.5rem;
+    }
+
+    .footer-brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--white);
+      margin-bottom: 1rem;
+    }
+
+    .footer-brand-logo strong {
+      font-family: var(--f-display);
+      font-size: 1.1rem;
+      font-weight: 400;
+    }
+
+    .footer-tagline {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.3);
+      font-weight: 300;
+      line-height: 1.65;
+      max-width: 280px;
+    }
+
+    .footer-col strong {
+      display: block;
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.25);
+      margin-bottom: 1rem;
+      font-weight: 500;
+    }
+
+    .footer-col a {
+      display: block;
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.5);
+      font-weight: 300;
+      margin-bottom: 0.6rem;
+      transition: color 0.2s;
+    }
+
+    .footer-col a:hover { color: var(--white); }
+
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-bottom p {
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.2);
+      font-weight: 300;
+    }
+
+    /* ─────────────────────────────────────────
+       ANIMATIONS & REVEALS
+    ───────────────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+
+    /* ─────────────────────────────────────────
+       MEMBERS BAND
+    ───────────────────────────────────────── */
+    .members-band {
+      background: var(--forest);
+      padding: 3.5rem 6rem;
+    }
+
+    .members-band-label {
+      font-size: 0.62rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.25);
+      margin-bottom: 1.5rem;
+      font-weight: 400;
+    }
+
+    .members-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+    }
+
+    .member-chip {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: rgba(255,255,255,0.5);
+      font-size: 0.75rem;
+      font-weight: 300;
+      padding: 0.4rem 0.9rem;
+      border-radius: 1px;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .member-chip:hover { background: rgba(255,255,255,0.12); color: rgba(255,255,255,0.85); }
+
+    /* ─────────────────────────────────────────
+       RESPONSIVE
+    ───────────────────────────────────────── */
+    @media (max-width: 1024px) {
+      .nav-links { gap: 1.5rem; }
+      .hero-content { padding: 0 4rem 7rem; }
+      .mission-intro { padding: 0 4rem; gap: 2.5rem; }
+      .traverse-text { padding: 4rem 3rem; }
+      .contact { padding: 6rem 4rem; gap: 4rem; }
+      .footer { padding: 4rem 4rem 2.5rem; }
+      .members-band { padding: 3rem 4rem; }
+    }
+
+    @media (max-width: 860px) {
+      .nav { padding: 0 1.5rem; }
+      .nav-links { display: none; position: fixed; top: 68px; left: 0; right: 0; flex-direction: column; background: rgba(15,26,15,0.97); padding: 2rem 1.5rem; gap: 1.25rem; border-bottom: 1px solid rgba(255,255,255,0.08); align-items: flex-start; }
+      .nav-links.open { display: flex; }
+      .nav-toggle { display: block; }
+
+      .hero-content { padding: 0 2rem 8rem; }
+      .hero-scroll { display: none; }
+      .hero-stats { position: relative; flex-wrap: wrap; }
+      .hero-stat { min-width: 50%; border-right: none; border-top: 1px solid rgba(255,255,255,0.08); }
+
+      .mission-intro { grid-template-columns: 1fr; padding: 0 2rem; }
+      .mission-cards { grid-template-columns: 1fr; }
+      .mission-card { aspect-ratio: 4/3; }
+
+      .traverse-inner { grid-template-columns: 1fr; }
+      .traverse-visual { height: 50vw; min-height: 250px; position: relative; }
+      .traverse-img { position: absolute; }
+      .traverse-text { padding: 3rem 2rem; }
+      .traverse-specs { grid-template-columns: repeat(3,1fr); }
+
+      .contact { grid-template-columns: 1fr; gap: 3rem; padding: 5rem 2rem; }
+      .form-grid { grid-template-columns: 1fr; }
+
+      .footer { padding: 3rem 2rem 2rem; }
+      .footer-top { grid-template-columns: 1fr; gap: 2rem; }
+      .footer-bottom { flex-direction: column; gap: 0.75rem; text-align: center; }
+      .members-band { padding: 2.5rem 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══════════════════════════════════════
+       NAV
+  ══════════════════════════════════════ -->
+  <nav class="nav" id="nav">
+    <a href="#" class="nav-logo">
+      <svg class="nav-logo-mark" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="16,2 30,28 2,28" fill="none" stroke="rgba(200,222,202,0.6)" stroke-width="1.5"/>
+        <polygon points="16,8 26,24 6,24" fill="none" stroke="rgba(200,222,202,0.35)" stroke-width="1"/>
+        <polygon points="16,14 22,22 10,22" fill="rgba(200,222,202,0.15)" stroke="rgba(200,222,202,0.5)" stroke-width="1"/>
+      </svg>
+      <div class="nav-logo-text">
+        <strong>Bluffland Coalition</strong>
+        <span>La Crosse–La Crescent Region</span>
+      </div>
+    </a>
+
+    <button class="nav-toggle" aria-label="Menu" onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>
+
+    <ul class="nav-links">
+      <li><a href="#mission">Land Protection</a></li>
+      <li><a href="#mission">Preservation</a></li>
+      <li><a href="#traverse">Traverse</a></li>
+      <li><a href="#contact" class="nav-cta">Get Involved</a></li>
+    </ul>
+  </nav>
+
+  <!-- ══════════════════════════════════════
+       HERO
+  ══════════════════════════════════════ -->
+  <section class="hero" id="home">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-contours"></div>
+
+    <div class="hero-content">
+      <div class="hero-eyebrow">
+        <div class="hero-eyebrow-line"></div>
+        <span class="hero-eyebrow-text">Conservation & Recreation · Upper Mississippi Blufflands</span>
+      </div>
+      <h1 class="hero-headline">
+        Protecting the<br>
+        Bluffs for <em>Every<br>Generation</em>
+      </h1>
+      <p class="hero-sub">
+        A coalition of local governments and nonprofits building an exceptional network of protected lands and recreation trails throughout the La Crosse–La Crescent region.
+      </p>
+      <div class="hero-actions">
+        <a href="#mission" class="btn-primary">
+          Explore Our Work
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="#contact" class="btn-ghost">Get Involved</a>
+      </div>
+    </div>
+
+    <div class="hero-scroll">
+      <span>Scroll</span>
+      <div class="hero-scroll-bar"></div>
+    </div>
+
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hero-stat-num">6,000</div>
+        <div class="hero-stat-label">Acres to be protected</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">3,000+</div>
+        <div class="hero-stat-label">Acres preserved so far</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">53 mi</div>
+        <div class="hero-stat-label">Bluffland Traverse</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">2016</div>
+        <div class="hero-stat-label">Regional Plan Founded</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       MISSION / CARDS
+  ══════════════════════════════════════ -->
+  <section class="mission" id="mission">
+    <div class="mission-intro">
+      <div class="reveal">
+        <div class="label"><span class="label-line"></span>Our Mission</div>
+        <h2 class="mission-headline">
+          Conserving the<br>
+          Blufflands that<br>
+          <em>Define Our Region</em>
+        </h2>
+      </div>
+      <div class="reveal reveal-delay-2">
+        <div class="mission-body">
+          <p>The Bluffland Coalition will establish an exceptional network of contiguous protected lands and recreation trails throughout the La Crosse–La Crescent region. Our cooperative efforts enhance the health of residents, visitors, natural ecosystems, and our local economy.</p>
+          <p>Created in response to the 2016 Blufflands Plan, the Coalition's goals are improved public health, ecological diversity, connected communities, economic strength, and a high quality of life for all who call this region home.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="mission-cards">
+      <a href="land-protection.html" class="mission-card reveal">
+        <div class="card-bg card-bg-1"></div>
+        <div class="card-overlay"></div>
+        <div class="card-content">
+          <div class="card-num">01</div>
+          <h3 class="card-title">Land<br><em>Protection</em></h3>
+          <p class="card-desc">Permanently shielding bluffland properties from development through strategic acquisitions, conservation easements, and municipal partnerships.</p>
+          <div class="card-link-row">
+            <span class="card-link-arrow"></span>
+            Learn More
+          </div>
+        </div>
+      </a>
+
+      <a href="land-preservation.html" class="mission-card reveal reveal-delay-2">
+        <div class="card-bg card-bg-2"></div>
+        <div class="card-overlay"></div>
+        <div class="card-content">
+          <div class="card-num">02</div>
+          <h3 class="card-title">Land<br><em>Preservation</em></h3>
+          <p class="card-desc">Restoring native habitats, managing invasive species, and stewarding ecological diversity — supported by hundreds of volunteers every season.</p>
+          <div class="card-link-row">
+            <span class="card-link-arrow"></span>
+            Learn More
+          </div>
+        </div>
+      </a>
+
+      <a href="recreation.html" class="mission-card reveal reveal-delay-3">
+        <div class="card-bg card-bg-3"></div>
+        <div class="card-overlay"></div>
+        <div class="card-content">
+          <div class="card-num">03</div>
+          <h3 class="card-title">Recreation &<br><em>Trails</em></h3>
+          <p class="card-desc">Building a connected trail network for hiking, running, biking, and year-round outdoor adventure — a defining feature of life in the blufflands.</p>
+          <div class="card-link-row">
+            <span class="card-link-arrow"></span>
+            Learn More
+          </div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       COALITION MEMBERS
+  ══════════════════════════════════════ -->
+  <div class="members-band reveal">
+    <div class="members-band-label">Coalition Members</div>
+    <div class="members-list">
+      <span class="member-chip">La Crosse County</span>
+      <span class="member-chip">City of La Crosse</span>
+      <span class="member-chip">City of Onalaska</span>
+      <span class="member-chip">City of La Crescent</span>
+      <span class="member-chip">Town of Shelby</span>
+      <span class="member-chip">Town of Medary</span>
+      <span class="member-chip">Town of Holland</span>
+      <span class="member-chip">LA Planning Committee</span>
+      <span class="member-chip">ORA Trails</span>
+      <span class="member-chip">Mississippi Valley Conservancy</span>
+      <span class="member-chip">Friends of the Blufflands</span>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       BLUFFLAND TRAVERSE
+  ══════════════════════════════════════ -->
+  <section class="traverse" id="traverse">
+    <div class="traverse-inner">
+      <!-- Left: image -->
+      <div class="traverse-visual">
+        <div class="traverse-img"></div>
+        <div class="traverse-img-overlay"></div>
+        <!-- Route path illustration -->
+        <svg class="traverse-route-svg" viewBox="0 0 100 280" xmlns="http://www.w3.org/2000/svg">
+          <line x1="50" y1="0" x2="50" y2="280" stroke="rgba(255,255,255,0.15)" stroke-width="1" stroke-dasharray="4,5"/>
+          <circle cx="50" cy="8"   r="5" fill="none" stroke="rgba(122,170,133,0.8)" stroke-width="1.5"/>
+          <circle cx="50" cy="8"   r="2.5" fill="rgba(122,170,133,0.8)"/>
+          <circle cx="48" cy="70"  r="3" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1"/>
+          <circle cx="52" cy="140" r="3" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1"/>
+          <circle cx="49" cy="210" r="3" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1"/>
+          <circle cx="51" cy="272" r="5" fill="none" stroke="rgba(184,137,42,0.8)"  stroke-width="1.5"/>
+          <circle cx="51" cy="272" r="2.5" fill="rgba(184,137,42,0.8)"/>
+          <text x="62" y="12"  fill="rgba(255,255,255,0.5)" font-size="8" font-family="Outfit,sans-serif">Start</text>
+          <text x="62" y="276" fill="rgba(255,255,255,0.5)" font-size="8" font-family="Outfit,sans-serif">End</text>
+        </svg>
+      </div>
+
+      <!-- Right: text -->
+      <div class="traverse-text">
+        <div class="label light reveal"><span class="label-line"></span>Signature Route</div>
+        <h2 class="traverse-headline reveal reveal-delay-1">
+          The Bluffland
+          <em>Traverse</em>
+        </h2>
+
+        <div class="traverse-body reveal reveal-delay-2">
+          <p>A point-to-point route running from the northern end of La Crosse County to the southern end, following the Mississippi River and the bluffs that overlook it.</p>
+          <p>The route utilizes a combination of road, gravel bike path, shared-use trail, and single-track on public property — connecting the county and its communities. ORA Trails is actively working with coalition members to acquire easements that will bring more of the route into the woods and away from traffic.</p>
+        </div>
+
+        <div class="traverse-specs reveal reveal-delay-2">
+          <div class="traverse-spec">
+            <div class="traverse-spec-val">53</div>
+            <div class="traverse-spec-key">Miles Total</div>
+          </div>
+          <div class="traverse-spec">
+            <div class="traverse-spec-val">N→S</div>
+            <div class="traverse-spec-key">Point-to-Point</div>
+          </div>
+          <div class="traverse-spec">
+            <div class="traverse-spec-val">All</div>
+            <div class="traverse-spec-key">Seasons</div>
+          </div>
+        </div>
+
+        <div class="traverse-map reveal reveal-delay-3">
+          <div class="traverse-map-title">Route Corridor · La Crosse County</div>
+          <div class="route-stops">
+            <div class="route-stop">
+              <div class="stop-dot start"><div class="stop-dot-inner"></div></div>
+              <div class="stop-label"><strong>Camp Decorah, Holmen</strong>Northern trailhead</div>
+            </div>
+            <div class="route-stop">
+              <div class="stop-dot"><div class="stop-dot-inner"></div></div>
+              <div class="stop-label"><strong>Onalaska</strong>Shared-use paths & blufftop trails</div>
+            </div>
+            <div class="route-stop">
+              <div class="stop-dot"><div class="stop-dot-inner"></div></div>
+              <div class="stop-label"><strong>La Crosse</strong>Hixon Forest & Grandad Bluff</div>
+            </div>
+            <div class="route-stop">
+              <div class="stop-dot"><div class="stop-dot-inner"></div></div>
+              <div class="stop-label"><strong>Town of Shelby</strong>Southern blufflands corridor</div>
+            </div>
+            <div class="route-stop">
+              <div class="stop-dot end"><div class="stop-dot-inner"></div></div>
+              <div class="stop-label"><strong>Goose Island County Park</strong>Southern terminus</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="reveal reveal-delay-4">
+          <a href="https://www.alltrails.com/explore/map/bluffland-trail-draft-3-4fc8ed9?u=i" target="_blank" class="btn-primary">
+            View on AllTrails
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       CONTACT
+  ══════════════════════════════════════ -->
+  <section class="contact" id="contact">
+    <div class="contact-text reveal">
+      <div class="label gold-col"><span class="label-line"></span>Get Involved</div>
+      <h2 class="contact-headline">
+        Join the<br><em>Coalition</em>
+      </h2>
+      <p class="contact-body">
+        Whether you're a landowner, volunteer, municipality, or neighbor who loves these bluffs — there is a place for you in the Bluffland Coalition's work.
+      </p>
+
+      <div class="contact-ways">
+        <div class="contact-way">
+          <div class="way-icon">🌿</div>
+          <div class="way-text">
+            <strong>Volunteer</strong>
+            <p>Join trail-building crews and habitat restoration workdays organized by ORA Trails and coalition members.</p>
+          </div>
+        </div>
+        <div class="contact-way">
+          <div class="way-icon">🤝</div>
+          <div class="way-text">
+            <strong>Partner</strong>
+            <p>Organizations and municipalities are welcome to join the coalition by signing the Memorandum of Understanding.</p>
+          </div>
+        </div>
+        <div class="contact-way">
+          <div class="way-icon">📬</div>
+          <div class="way-text">
+            <strong>Stay Informed</strong>
+            <p>Receive updates on land protection, trail projects, and events across the blufflands.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-form-wrap reveal reveal-delay-2">
+      <div class="form-title">Send a Message</div>
+      <form class="form-grid" onsubmit="submitForm(event)">
+        <div class="form-field">
+          <label for="fname">First Name</label>
+          <input type="text" id="fname" placeholder="Jane" required>
+        </div>
+        <div class="form-field">
+          <label for="lname">Last Name</label>
+          <input type="text" id="lname" placeholder="Smith" required>
+        </div>
+        <div class="form-field full">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" placeholder="you@example.com" required>
+        </div>
+        <div class="form-field full">
+          <label for="interest">I'm interested in</label>
+          <select id="interest">
+            <option value="">Select one…</option>
+            <option>Volunteering</option>
+            <option>Partnership or Membership</option>
+            <option>Land Conservation</option>
+            <option>Trail Information</option>
+            <option>Donating</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-field full">
+          <label for="message">Message</label>
+          <textarea id="message" placeholder="Tell us about yourself or your question…"></textarea>
+        </div>
+        <div class="form-submit full">
+          <button type="submit" class="btn-primary">
+            Send Message
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+        <div class="form-success" id="formSuccess">
+          ✓ Thank you — we'll be in touch soon.
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       FOOTER
+  ══════════════════════════════════════ -->
+  <footer class="footer">
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand-logo">
+          <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+            <polygon points="16,2 30,28 2,28" fill="none" stroke="rgba(200,222,202,0.5)" stroke-width="1.5"/>
+            <polygon points="16,8 26,24 6,24" fill="none" stroke="rgba(200,222,202,0.3)" stroke-width="1"/>
+            <polygon points="16,14 22,22 10,22" fill="rgba(200,222,202,0.1)" stroke="rgba(200,222,202,0.4)" stroke-width="1"/>
+          </svg>
+          <strong>Bluffland Coalition</strong>
+        </div>
+        <p class="footer-tagline">Conservation and Recreation Throughout the La Crosse–La Crescent Region, Upper Mississippi Blufflands.</p>
+      </div>
+      <div class="footer-col">
+        <strong>Our Work</strong>
+        <a href="land-protection.html">Land Protection</a>
+        <a href="land-preservation.html">Land Preservation</a>
+        <a href="recreation.html">Recreation & Trails</a>
+        <a href="https://www.oratrails.org/trails/bluffland-traverse/" target="_blank">Bluffland Traverse</a>
+      </div>
+      <div class="footer-col">
+        <strong>Connect</strong>
+        <a href="#contact">Contact Us</a>
+        <a href="https://www.oratrails.org/the-bluffland-coalition/" target="_blank">ORA Trails</a>
+        <a href="https://www.mississippivalleyconservancy.org/" target="_blank">Mississippi Valley Conservancy</a>
+        <a href="https://storymaps.arcgis.com/stories/eca0ed26dadb4bbd900627940ebc31ba" target="_blank">2024 Annual Report</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Bluffland Coalition · La Crosse–La Crescent Region, Wisconsin & Minnesota</p>
+      <p>Part of the La Crosse Area Planning Committee Regional Initiative · Est. 2016</p>
+    </div>
+  </footer>
+
+  <script>
+    // Nav scroll effect
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    // Intersection Observer for reveals
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    reveals.forEach(el => observer.observe(el));
+
+    // Form submit
+    function submitForm(e) {
+      e.preventDefault();
+      const success = document.getElementById('formSuccess');
+      success.style.display = 'block';
+      e.target.reset();
+      setTimeout(() => { success.style.display = 'none'; }, 6000);
+    }
+
+    // Smooth anchor scroll
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const id = a.getAttribute('href');
+        if (id === '#') return;
+        const target = document.querySelector(id);
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth' });
+          document.querySelector('.nav-links')?.classList.remove('open');
+        }
+      });
+    });
+  </script>
+</body>
+</html>

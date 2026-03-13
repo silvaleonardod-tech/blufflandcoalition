@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Work — Bluffland Coalition</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="shared.css">
+  <style>
+
+    /* ── FILTER BAR ── */
+    .filter-bar {
+      background: var(--parchment);
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+      padding: 0 6rem;
+      display: flex; align-items: center;
+      overflow-x: auto;
+    }
+    .filter-btn {
+      background: none; border: none; border-bottom: 2px solid transparent;
+      font-family: var(--f-body); font-size: 0.68rem; font-weight: 500;
+      letter-spacing: 0.14em; text-transform: uppercase; color: var(--stone);
+      padding: 1.1rem 1.35rem; cursor: pointer; white-space: nowrap;
+      transition: color 0.2s, border-color 0.2s; flex-shrink: 0;
+    }
+    .filter-btn:hover { color: var(--forest); }
+    .filter-btn.active { color: var(--forest); border-bottom-color: var(--gold); }
+
+    /* ── STATS BAND ── */
+    .stats-band {
+      background: var(--forest);
+      display: grid; grid-template-columns: repeat(4,1fr);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .sb-stat { padding: 1.6rem 2.5rem; border-right: 1px solid rgba(255,255,255,0.07); }
+    .sb-stat:last-child { border-right: none; }
+    .sb-val { font-family: var(--f-display); font-size: 2rem; font-weight: 600; color: var(--white); line-height: 1; margin-bottom: 0.22rem; }
+    .sb-lbl { font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.35); font-weight: 300; }
+
+    /* ── UPDATES ── */
+    .updates-section { padding: 5rem 6rem; }
+    .updates-inner { max-width: 1160px; margin: 0 auto; }
+    .updates-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; }
+
+    /* ── CARDS ── */
+    .post-card {
+      background: var(--white); border: 1px solid rgba(0,0,0,0.07);
+      overflow: hidden; display: flex; flex-direction: column;
+      transition: box-shadow 0.25s, transform 0.25s;
+    }
+    .post-card:hover { box-shadow: 0 10px 40px rgba(0,0,0,0.09); transform: translateY(-2px); }
+    .post-card.featured { grid-column: 1 / -1; display: grid; grid-template-columns: 1.1fr 1fr; }
+    .post-img { overflow: hidden; flex-shrink: 0; background: var(--forest); aspect-ratio: 16/10; display: flex; align-items: center; justify-content: center; }
+    .post-card.featured .post-img { aspect-ratio: auto; min-height: 360px; }
+    .post-img img { width:100%; height:100%; object-fit:cover; transition: transform 0.6s var(--ease); display: block; }
+    .post-card:hover .post-img img { transform: scale(1.05); }
+    .post-img-icon { font-size: 3rem; opacity: 0.22; }
+    .post-body { padding: 1.75rem 2rem; display: flex; flex-direction: column; gap: 0.65rem; flex: 1; }
+    .post-card.featured .post-body { padding: 2.75rem 2.5rem; justify-content: center; }
+    .post-meta { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+    .post-tag { display: inline-block; font-size: 0.58rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; padding: 0.22rem 0.7rem; border-radius: 1px; }
+    .tag-protection  { background: rgba(28,51,32,0.1);   color: var(--forest); }
+    .tag-preservation{ background: rgba(107,58,42,0.1);  color: var(--red-earth); }
+    .tag-recreation  { background: rgba(46,84,53,0.1);   color: var(--moss); }
+    .tag-traverse    { background: rgba(184,137,42,0.12); color: var(--gold); }
+    .tag-coalition   { background: rgba(138,132,120,0.12);color: var(--stone); }
+    .post-date { font-size: 0.68rem; color: var(--stone-lt); font-weight: 300; }
+    .post-title { font-family: var(--f-display); font-size: 1.15rem; font-weight: 400; color: var(--forest); line-height: 1.25; }
+    .post-card.featured .post-title { font-size: clamp(1.4rem,2.2vw,2rem); }
+    .post-excerpt { font-size: 0.85rem; color: var(--stone); font-weight: 300; line-height: 1.75; flex: 1; }
+    .post-source { font-size: 0.67rem; color: var(--stone-lt); font-weight: 300; font-style: italic; border-top: 1px solid rgba(0,0,0,0.06); padding-top: 0.6rem; margin-top: 0.1rem; }
+    .post-link { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.67rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--fern); margin-top: 0.3rem; transition: gap 0.25s, color 0.2s; }
+    .post-card:hover .post-link { gap: 0.85rem; color: var(--forest); }
+    .post-link-arrow { width: 16px; height: 1px; background: currentColor; position: relative; flex-shrink: 0; }
+    .post-link-arrow::after { content:''; position:absolute; right:0; top:-3px; width:5px; height:5px; border-right:1px solid currentColor; border-top:1px solid currentColor; transform:rotate(45deg); }
+
+    /* ── YEAR DIVIDERS ── */
+    .year-divider { grid-column: 1/-1; display: flex; align-items: center; gap: 1.5rem; padding: 1.5rem 0 0.5rem; }
+    .year-divider-label { font-family: var(--f-display); font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--stone-lt); white-space: nowrap; }
+    .year-divider-line { flex: 1; height: 1px; background: rgba(0,0,0,0.08); }
+
+    /* ── SOURCES NOTE ── */
+    .sources-note { background: var(--parchment); border: 1px solid rgba(0,0,0,0.07); padding: 1.5rem 2rem; margin-top: 3.5rem; display: flex; align-items: flex-start; gap: 1rem; }
+    .sources-note p { font-size: 0.8rem; color: var(--stone); font-weight: 300; line-height: 1.7; }
+    .sources-note a { color: var(--fern); }
+    .sources-note a:hover { color: var(--forest); text-decoration: underline; }
+
+    @media(max-width:960px) {
+      .filter-bar { padding: 0 1.5rem; }
+      .stats-band { grid-template-columns: 1fr 1fr; }
+      .sb-stat { border-bottom: 1px solid rgba(255,255,255,0.07); }
+      .updates-section { padding: 4rem 2rem; }
+      .updates-grid { grid-template-columns: 1fr; }
+      .post-card.featured { grid-template-columns: 1fr; }
+      .post-card.featured .post-img { min-height: 220px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav scrolled" id="mainNav">
+    <a href="index.html" class="nav-logo">
+      <img src="BC_2025_logo_V1.png" alt="Bluffland Coalition" class="nav-logo-mark" style="width:42px;height:42px;object-fit:contain;border-radius:50%;">
+      <div class="nav-logo-text"><strong>Bluffland Coalition</strong><span>La Crosse–La Crescent Region</span></div>
+    </a>
+    <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>
+    <ul class="nav-links">
+      <li><a href="our-work.html" class="active">Our Work</a></li>
+      <li><a href="land-protection.html">Land Protection</a></li>
+      <li><a href="land-preservation.html">Preservation</a></li>
+      <li><a href="recreation.html">Recreation</a></li>
+      <li><a href="get-involved.html" class="nav-cta">Get Involved</a></li>
+    </ul>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <div class="page-hero">
+    <div class="page-hero-bg" style="background-image:url('Hixon_aerial01.jpg');"></div>
+    <div class="page-hero-overlay"></div>
+    <div class="page-hero-content">
+      <div class="label light"><span class="label-line"></span>Latest from the Coalition</div>
+      <h1>Our <em>Work</em></h1>
+      <p>Ongoing updates on land protection, habitat restoration, trail development, and coalition progress across the La Crosse–La Crescent region.</p>
+    </div>
+  </div>
+
+  <!-- STATS BAND -->
+  <div class="stats-band">
+    <div class="sb-stat"><div class="sb-val">3,000+</div><div class="sb-lbl">Acres permanently protected</div></div>
+    <div class="sb-stat"><div class="sb-val">6,000</div><div class="sb-lbl">Acres targeted region-wide</div></div>
+    <div class="sb-stat"><div class="sb-val">$100K</div><div class="sb-lbl">County funding allocated (2025)</div></div>
+    <div class="sb-stat"><div class="sb-val">11</div><div class="sb-lbl">Coalition member organizations</div></div>
+  </div>
+
+  <!-- FILTER BAR -->
+  <div class="filter-bar">
+    <button class="filter-btn active" onclick="filterPosts('all',this)">All Updates</button>
+    <button class="filter-btn" onclick="filterPosts('protection',this)">Land Protection</button>
+    <button class="filter-btn" onclick="filterPosts('preservation',this)">Preservation</button>
+    <button class="filter-btn" onclick="filterPosts('recreation',this)">Recreation</button>
+    <button class="filter-btn" onclick="filterPosts('traverse',this)">Traverse</button>
+    <button class="filter-btn" onclick="filterPosts('coalition',this)">Coalition News</button>
+  </div>
+
+  <section class="updates-section">
+    <div class="updates-inner">
+      <div class="updates-grid" id="updatesGrid">
+
+        <!-- ═══ 2025–2026 ═══ -->
+        <div class="year-divider reveal"><div class="year-divider-label">2025 – 2026</div><div class="year-divider-line"></div></div>
+
+        <!-- FEATURED: Four County Grants Jan 2026 -->
+        <article class="post-card featured reveal" data-cat="coalition">
+          <div class="post-img" style="background:linear-gradient(135deg,var(--forest),var(--moss));">
+            <div class="post-img-icon">🏛️</div>
+          </div>
+          <div class="post-body">
+            <div class="post-meta">
+              <span class="post-tag tag-coalition">Coalition News</span>
+              <span class="post-date">January 2026</span>
+            </div>
+            <h2 class="post-title">La Crosse County Board Approves Four Bluffland Grants</h2>
+            <p class="post-excerpt">The Bluffland Coalition announced the La Crosse County Board's approval of four separate bluffland grants — a major step forward for regional trail connectivity and habitat restoration. Leonardo Silva, Supervisor of the Town of Medary and a coalition member, highlighted the accomplishment as evidence of the coalition's growing impact after nearly a decade of sustained work.</p>
+            <p class="post-excerpt">The coalition's volunteer network continues to grow — hundreds of community members spend Saturday afternoons building trails and clearing invasive species from bluffland properties across the region.</p>
+            <div class="post-source">Source: WIZM News, January 6, 2026</div>
+          </div>
+        </article>
+
+        <!-- Community Trail Farm expansion Aug 2025 -->
+        <article class="post-card reveal" data-cat="recreation">
+          <div class="post-img" style="background:linear-gradient(135deg,#1a3020,#2e5435);">
+            <div class="post-img-icon">🚵</div>
+          </div>
+          <div class="post-body">
+            <div class="post-meta"><span class="post-tag tag-recreation">Recreation</span><span class="post-date">August 2025</span></div>
+            <h2 class="post-title">Coalition Grant Expands Community Trail Farm by 10 Acres</h2>
+            <p class="post-excerpt">A $50,000 joint grant from the Bluffland Coalition and La Crosse County enabled ORA Trails to acquire 10 additional acres for the Community Trail Farm. The new land sits at the top of the bluff near Skyline Boulevard and Hagen Road, opening access from State Road Elementary, Chad Erickson Park, and surrounding neighborhoods.</p>
+            <div class="post-source">Source: La Crosse Tribune, August 2025</div>
+            <a href="https://www.oratrails.org/trail-farm/" target="_blank" class="post-link"><span class="post-link-arrow"></span>Community Trail Farm</a>
+          </div>
+        </article>
+
+        <!-- French Road Onalaska Aug 2025 -->
+        <article class="post-card reveal reveal-d1" data-cat="protection">
+          <div class="post-img">
+            <img src="https://www.mississippivalleyconservancy.org/sites/default/files/styles/juicebox_large/public/la-crosse-blufflands.jpg?itok=8zvfGEjE" alt="Onalaska bluffland" onerror="this.parentNode.style.background='linear-gradient(135deg,#1c3320,#2a4a35)'">
+          </div>
+          <div class="post-body">
+            <div class="post-meta"><span class="post-tag tag-protection">Land Protection</span><span class="post-date">August 2025</span></div>
+            <h2 class="post-title">80-Acre French Road Property Donated to City of Onalaska</h2>
+            <p class="post-excerpt">Mississippi Valley Conservancy donated 80 acres of bluffland to the City of Onalaska, bringing the city's total conserved bluffland to 162 acres. The French Road property features dry cliffs, globally vulnerable prairie remnants, and rare oak woodlands above the Mississippi River valley — connected to existing Greenway parklands with a permanent conservation easement.</p>
+            <div class="post-source">Source: La Crosse Tribune, August 2025</div>
+            <a href="https://www.mississippivalleyconservancy.org" target="_blank" class="post-link"><span class="post-link-arrow"></span>Mississippi Valley Conservancy</a>
+          </div>
+        </article>
+
+        <!-- ═══ 2024 ═══ -->
+        <div class="year-divider reveal"><div class="year-divider-label">2024</div><div class="year-divider-line"></div></div>
+
+        <!-- County 2025 budget $100K Nov 2024 -->
+        <article class="post-card reveal" data-cat="coalition">
+          <div class="post-img" style="background:linear-gradient(135deg,#2a2018,#4a3820);">
+            <div class="post-img-icon">💰</div>
+          </div>
+          <div class="post-body">
+            <div class="post-meta"><span class="post-tag tag-coalition">Coalition News</span><span class="post-date">November 2024</span></div>
+            <h2 class="post-title">La Crosse County 2025 Budget Allocates $100,000 to Bluffland Coalition</h2>
+            <p class="post-excerpt">The La Crosse County Board adopted its 2025 budget with a $100,000 allocation dedicated to the Bluffland Coalition — supporting ongoing land protection, trail connectivity, and habitat restoration work county-wide. One of several conservation-focused investments in the $205 million budget.</p>
+            <div class="post-source">Source: La Crosse Tribune, November 2024</div>
+          </div>
+        </article>
+
+        <!-- Community Trail Farm public launch Oct 2024 -->
+        <article class="post-card reveal reveal-d1" data-cat="recreation">
+          <div class="post-img" style="background:linear-gradient(135deg,#1e2e3a,#2a4a6a);">
+            <div class="post-img-icon">🌾</div>
+          </div>
+          <div class="post-body">
+            <div class="post-meta"><span class="post-tag tag-recreation">Recreation</span><span class="post-date">October 2024</span></div>
+            <h2 class="post-title">Community Trail Farm Launches — 270+ Acres, 15 Miles of Trails Planned</h2>
+            <p class="post-excerpt">ORA Trails publicly launched the Community Trail Farm project — a 270+ acre site along Pammel Creek in the heart of the blufflands. Secured with a $1.15 million Knowles-Nelson Stewardship Program grant, the project will deliver 15 miles of world-class trails, a nature education center, and year-round access for all ages and abilities.</p>
+            <div class="post-source">Source: ORA Trails, WXOW, Knowles-Nelson, October 2024</div>
+            <a href="https://www.oratrails.org/trail-farm/" target="_blank" class="post-link"><span class="post-link-arrow"></span>Learn About the Trail Farm</a>
+          </div>
+        </article>
+
+        <!-- 2024 Annual Report -->
+        <article class="post-card reveal reveal-d2" data-cat="coalition">
+          <div class="post-img">
+            <img src="https://www.oratrails.org/wp-content/uploads/2025/01/BC-Header-Image.png" alt="Bluffland Coalition 2024 Annual Report" onerror="this.parentNode.style.background='linear-gradient(135deg,var(--forest),var(--moss))'">
+          </div>
+          <div class="post-body">
+            <div class="post-meta"><span class="post-tag tag-coalition">Coalition News</span><span class="post-date">2024</span></div>
+            <h2 class="post-title">2024 Annual Report Released on ArcGIS StoryMaps</h2>
+            <p class="post-excerpt">The coalition's 2024 Annual Report documents the year's milestones across land protection, preservation, and recreation — tracking protected acreage progress toward the 6,000-acre goal, grant funding secured, trail segments completed, and coalition-wide activities. Available now on ArcGIS StoryMaps.</p>
+            <a href="https://storymaps.arcgis.com/stories/eca0ed26dadb4bbd900627940ebc31ba" target="_blank" class="post-link"><span class="post-link-arrow"></span>Read the Full 2024 Report</a>
+          </div>
+        </article>
+
+        <!-- ═══ 2021–2023 ═══ -->
+        <div class="year-divider reveal"><div class="year-divider-label">2021 – 2023</div><div class="year-divider-line"></div></div>
+
+        <!-- ORA 277 acres / County $150K 2023 -->
+        <article class="post-card reveal" data-cat="protection">
+          <div class="post-img">
+            <img src="https://www.mississippivalleyconservancy.org/sites/default/files/styles/juicebox_large/public/cardinal-bluff.jpg?itok=ErBzlhX-" alt="Cardinal Bluff woodland" onerror="this.parentNode.style.background='linear-gradient(135deg,#1c3320,#2a4a35)'">
+          </div>
+          <div class="post-body">
+            <div class="post-meta"><span class="post-tag tag-protection">Land Protection</span><span class="post-date">February 2023</span></div>
+            <h2 class="post-title">County Board Votes on $150,000 Toward 277-Acre ORA Acquisition in Town of Shelby</h2>
+            <p class="post-excerpt">The La Crosse County Board considered $150,000 from the Bluffland Protection Fund toward ORA Trails' acquisition of 277 acres of bluffland in the Town of Shelby — a DNR Knowles-Nelson Stewardship grant project that would extend trail connectivity to the southern corridor near Goose Island. Since 2017, roughly $87,000 had been drawn from the county's Bluffland Protection Fund before this vote.</p>
+            <div class="post-source">Source: WIZM News, February 2023</div>
+          </div>
+        </article>
+
+        <!-- Dr. Borst Traverse Nov 2022 -->
+        <article class="post-card reveal reveal-d1" data-cat="traverse">
+          <div class="post-img">
+            <img src="https://www.oratrails.org/wp-content/uploads/2022/08/Bluffland-Trail-.png" alt="Bluffland Traverse route map" onerror="this.parentNode.style.background='linear-gradient(135deg,#1a3020,#2e5435)'">
+          </div>
+          <div class="post-body">
+            <div class="post-meta"><span class="post-tag tag-traverse">Traverse</span><span class="post-date">November 5, 2022</span></div>
+            <h2 class="post-title">Dr. Michael Borst Completes the Full 53-Mile Traverse</h2>
+            <p class="post-excerpt">ORA Trails president Dr. Michael Borst — the creator of the Bluffland Traverse route — became the first to document a complete run of all 53 miles on November 5, 2022, from Camp Decorah in Holmen to Goose Island County Park. The accomplishment demonstrated the route's viability and galvanized community support for completing the trail.</p>
+            <div class="post-source">Source: ORA Trails, November 2022</div>
+            <a href="https://www.oratrails.org/trails/bluffland-traverse/" target="_blank" class="post-link"><span class="post-link-arrow"></span>About the Traverse</a>
+          </div>
+        </article>
+
+        <!-- Kaplan Tract Dec 2021 -->
+        <article class="post-card reveal reveal-d2" data-cat="protection">
+          <div class="post-img">
+            <img src="https://www.mississippivalleyconservancy.org/sites/default/files/styles/news_detail/public/2021-12/Kaplan%20property%20acquired%20REDUCED.jpg?itok=bsNL1ePx" alt="Kaplan property acquisition" onerror="this.parentNode.style.background='linear-gradient(135deg,#1c3320,#2a4a35)'">
+          </div>
+          <div class="post-body">
+            <div class="post-meta"><span class="post-tag tag-protection">Land Protection</span><span class="post-date">December 2021</span></div>
+            <h2 class="post-title">Kaplan Tract Adds 44 Acres to 1,200-Acre Corridor in Town of Medary</h2>
+            <p class="post-excerpt">Mississippi Valley Conservancy purchased the 44-acre Kaplan property — featuring 150-year-old bur and white oaks, ancient prairie remnants, and sandstone bedrock fissures sheltering area wildlife. It adds to a connected corridor of more than 1,200 acres identified as an area of "continental ecological significance." Funded by Wisconsin's Knowles-Nelson Stewardship Program and the Paul E. Stry Foundation.</p>
+            <div class="post-source">Source: Mississippi Valley Conservancy, December 2021</div>
+            <a href="https://www.mississippivalleyconservancy.org/wild-reads/more-acres-protected-la-crosse-blufflands" target="_blank" class="post-link"><span class="post-link-arrow"></span>Read the Full Story</a>
+          </div>
+        </article>
+
+        <!-- ═══ Coalition Founding ═══ -->
+        <div class="year-divider reveal"><div class="year-divider-label">Coalition Founding — 2016 – 2019</div><div class="year-divider-line"></div></div>
+
+        <!-- MOU Signed 2018-19 -->
+        <article class="post-card reveal" data-cat="coalition">
+          <div class="post-img" style="background:linear-gradient(135deg,#2a2018,#4a3820);">
+            <div class="post-img-icon">📝</div>
+          </div>
+          <div class="post-body">
+            <div class="post-meta"><span class="post-tag tag-coalition">Coalition News</span><span class="post-date">2018 – 2019</span></div>
+            <h2 class="post-title">Eight Organizations Sign Memorandum of Understanding — Coalition Officially Formed</h2>
+            <p class="post-excerpt">La Crosse County became the first to sign the coalition's MOU in 2018; within months, seven more governments and nonprofits joined. Member municipalities commit 40 cents per capita annually for coalition coordination, plus $1 per capita over 25 years for local bluffland projects. A part-time coalition coordinator was hired soon after with early municipal contributions.</p>
+            <div class="post-source">Source: Wisconsin Public Radio, 2019</div>
+          </div>
+        </article>
+
+        <!-- La Crosse Bluffland Protection Program 2002-2016 -->
+        <article class="post-card reveal reveal-d1" data-cat="protection">
+          <div class="post-img">
+            <img src="https://www.mississippivalleyconservancy.org/sites/default/files/styles/juicebox_large/public/eagle-eye.jpg?itok=b1RXvmQg" alt="Aerial view of the blufflands" onerror="this.parentNode.style.background='linear-gradient(135deg,#1c3320,#2a4a35)'">
+          </div>
+          <div class="post-body">
+            <div class="post-meta"><span class="post-tag tag-protection">Land Protection</span><span class="post-date">2002 – 2016</span></div>
+            <h2 class="post-title">La Crosse Bluffland Protection Program — A Decade of Urban Conservation</h2>
+            <p class="post-excerpt">From 2002 to 2009, the City of La Crosse and Mississippi Valley Conservancy jointly protected an eight-mile stretch of Mississippi River bluffs, leveraging city funds with Knowles-Nelson Stewardship grants. Nearly 1,000 acres were protected, including the 453-acre Mathy Quarry (the largest single tract). The City was recognized as "Policymaker of the Year" by Gathering Waters in 2006.</p>
+            <div class="post-source">Source: Mississippi Valley Conservancy</div>
+            <a href="https://mississippivalleyconservancy.org/land-protection/la-crosse-blufflands-project" target="_blank" class="post-link"><span class="post-link-arrow"></span>La Crosse Blufflands</a>
+          </div>
+        </article>
+
+        <!-- 2016 Blufflands Plan -->
+        <article class="post-card reveal reveal-d2" data-cat="coalition">
+          <div class="post-img" style="background:linear-gradient(135deg,#1e2a18,#2e4228);">
+            <div class="post-img-icon">🗺️</div>
+          </div>
+          <div class="post-body">
+            <div class="post-meta"><span class="post-tag tag-coalition">Coalition News</span><span class="post-date">2016</span></div>
+            <h2 class="post-title">The 2016 Blufflands Plan — A Regional Framework for Conservation &amp; Recreation</h2>
+            <p class="post-excerpt">The La Crosse Area Planning Committee published the Blufflands Plan in 2016 — establishing goals to permanently protect 6,000 acres of bluffland and build a multi-use trail from Goose Island to northern La Crosse County. A public survey found over 70% of area residents would support additional property taxes for bluffland protection.</p>
+            <div class="post-source">Source: La Crosse Area Planning Committee, 2016; WPR</div>
+            <a href="https://storymaps.arcgis.com/stories/eca0ed26dadb4bbd900627940ebc31ba" target="_blank" class="post-link"><span class="post-link-arrow"></span>View 2024 Annual Report</a>
+          </div>
+        </article>
+
+      </div><!-- /grid -->
+
+      <!-- Sources note -->
+      <div class="sources-note reveal">
+        <div style="font-size:1.1rem;flex-shrink:0;margin-top:0.05rem;">ℹ️</div>
+        <p>Updates sourced from <a href="https://www.oratrails.org/the-bluffland-coalition/" target="_blank">ORA Trails</a>, <a href="https://www.mississippivalleyconservancy.org" target="_blank">Mississippi Valley Conservancy</a>, <a href="https://lacrossetribune.com" target="_blank">La Crosse Tribune</a>, <a href="https://www.wizmnews.com" target="_blank">WIZM News</a>, and <a href="https://www.wpr.org" target="_blank">Wisconsin Public Radio</a>. For a comprehensive annual summary, view the <a href="https://storymaps.arcgis.com/stories/eca0ed26dadb4bbd900627940ebc31ba" target="_blank">2024 Annual Report on ArcGIS StoryMaps ↗</a>.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-top">
+      <div><div class="footer-brand-logo"><img src="BC_2025_logo_V1.png" alt="Bluffland Coalition" style="width:44px;height:44px;object-fit:contain;border-radius:50%;"><strong>Bluffland Coalition</strong></div><p class="footer-tagline">Conservation and Recreation Throughout the La Crosse–La Crescent Region.</p></div>
+      <div class="footer-col"><strong>Our Work</strong><a href="our-work.html">Latest Updates</a><a href="land-protection.html">Land Protection</a><a href="land-preservation.html">Land Preservation</a><a href="recreation.html">Recreation & Trails</a></div>
+      <div class="footer-col"><strong>Coalition</strong><a href="https://www.oratrails.org" target="_blank">ORA Trails</a><a href="https://www.mississippivalleyconservancy.org" target="_blank">MV Conservancy</a><a href="https://www.lacrossecounty.org" target="_blank">La Crosse County</a><a href="https://www.cityoflacrosse.org" target="_blank">City of La Crosse</a></div>
+      <div class="footer-col"><strong>Connect</strong><a href="get-involved.html">Get Involved</a><a href="get-involved.html#volunteer">Volunteer</a><a href="https://storymaps.arcgis.com/stories/eca0ed26dadb4bbd900627940ebc31ba" target="_blank">2024 Annual Report</a><a href="https://www.alltrails.com/explore/map/bluffland-trail-draft-3-4fc8ed9?u=i" target="_blank">AllTrails Map</a></div>
+    </div>
+    <div class="footer-bottom"><p>© 2025 Bluffland Coalition · La Crosse–La Crescent Region</p><p>Est. 2016</p></div>
+  </footer>
+
+  <script>
+    const obs = new IntersectionObserver(entries => entries.forEach(e => {
+      if(e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target); }
+    }), {threshold:0.07, rootMargin:'0px 0px -20px 0px'});
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+    function filterPosts(cat, btn) {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const allCards = document.querySelectorAll('.post-card');
+      allCards.forEach(card => {
+        const show = cat === 'all' || card.dataset.cat === cat;
+        card.style.display = show ? '' : 'none';
+        if (card.classList.contains('featured')) card.style.gridColumn = show ? '1/-1' : '';
+      });
+      // Year dividers: show all when 'all', hide when filtering
+      document.querySelectorAll('.year-divider').forEach(d => {
+        d.style.display = cat === 'all' ? '' : 'none';
+      });
+    }
+  </script>
+</body>
+</html>

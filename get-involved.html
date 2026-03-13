@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Get Involved — Bluffland Coalition</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="shared.css">
+  <style>
+    /* ── WAYS TO HELP ── */
+    .ways-section { padding: 5.5rem 6rem; background: var(--cream); }
+    .ways-inner { max-width: 1160px; margin: 0 auto; }
+    .ways-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: rgba(0,0,0,0.07); border: 1px solid rgba(0,0,0,0.07); margin-top: 3rem; }
+    .way-card { background: var(--white); padding: 2.5rem 2rem; transition: background 0.2s; }
+    .way-card:hover { background: var(--cream); }
+    .way-icon { width: 44px; height: 44px; border-radius: 2px; background: var(--forest); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; margin-bottom: 1.25rem; }
+    .way-title { font-family: var(--f-display); font-size: 1.3rem; font-weight: 400; color: var(--forest); margin-bottom: 0.65rem; }
+    .way-body { font-size: 0.87rem; color: var(--stone); font-weight: 300; line-height: 1.8; margin-bottom: 1.25rem; }
+    .way-link { display: flex; align-items: center; gap: 0.5rem; font-size: 0.67rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--fern); transition: gap 0.25s; }
+    .way-link:hover { gap: 0.85rem; color: var(--forest); }
+    .way-link-arrow { width: 16px; height: 1px; background: currentColor; position: relative; flex-shrink: 0; }
+    .way-link-arrow::after { content:''; position:absolute; right:0; top:-3px; width:5px; height:5px; border-right:1px solid currentColor; border-top:1px solid currentColor; transform:rotate(45deg); }
+
+    /* ── FORM SECTION ── */
+    .form-section { padding: 5.5rem 6rem; background: var(--parchment); }
+    .form-inner { max-width: 1160px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: start; }
+    .form-context h2 { font-family: var(--f-display); font-size: clamp(2rem,3.8vw,3.2rem); font-weight: 300; color: var(--forest); line-height: 1.05; margin-top: 0.5rem; letter-spacing: -0.01em; }
+    .form-context h2 em { font-style: italic; }
+    .form-context p { font-size: 0.9rem; color: var(--stone); font-weight: 300; line-height: 1.85; margin-top: 1rem; }
+    .form-context-details { margin-top: 2.5rem; display: flex; flex-direction: column; gap: 1.25rem; }
+    .form-detail { display: flex; align-items: flex-start; gap: 0.85rem; padding-bottom: 1.25rem; border-bottom: 1px solid rgba(46,84,53,0.1); }
+    .form-detail:last-child { border-bottom: none; }
+    .form-detail-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 0.05rem; }
+    .form-detail strong { display: block; font-size: 0.82rem; font-weight: 500; color: var(--forest); margin-bottom: 0.18rem; }
+    .form-detail p { font-size: 0.8rem; color: var(--stone); font-weight: 300; line-height: 1.55; margin: 0; }
+
+    /* Form itself */
+    .contact-form { background: var(--white); padding: 2.5rem; border: 1px solid rgba(0,0,0,0.07); }
+    .form-title { font-family: var(--f-display); font-size: 1.5rem; font-weight: 400; color: var(--forest); margin-bottom: 2rem; }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+    .form-field { display: flex; flex-direction: column; gap: 0.4rem; }
+    .form-field.full { grid-column: 1/-1; }
+    .form-field label { font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--stone); font-weight: 500; }
+    .form-field input, .form-field select, .form-field textarea {
+      background: var(--cream); border: 1px solid rgba(46,84,53,0.16); border-radius: 1px;
+      padding: 0.72rem 0.95rem; font-family: var(--f-body); font-size: 0.88rem; font-weight: 300;
+      color: var(--ink); outline: none; transition: border-color 0.2s; appearance: none;
+    }
+    .form-field input::placeholder, .form-field textarea::placeholder { color: rgba(138,132,120,0.45); }
+    .form-field input:focus, .form-field select:focus, .form-field textarea:focus { border-color: var(--moss); background: var(--white); }
+    .form-field textarea { resize: vertical; min-height: 110px; }
+    .form-field select option { background: white; }
+    .form-submit { grid-column: 1/-1; margin-top: 0.5rem; }
+    .form-submit .btn { width: 100%; justify-content: center; }
+    .form-success { display: none; background: var(--moss); color: white; padding: 0.9rem 1.2rem; text-align: center; font-size: 0.85rem; grid-column: 1/-1; margin-top: 0; }
+
+    /* ── ORG LINKS ── */
+    .orgs-section { padding: 5rem 6rem; background: var(--forest); }
+    .orgs-inner { max-width: 1160px; margin: 0 auto; }
+    .orgs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1px; background: rgba(255,255,255,0.07); margin-top: 2.5rem; }
+    .org-item { background: rgba(255,255,255,0.03); padding: 1.4rem 1.5rem; transition: background 0.2s; }
+    .org-item:hover { background: rgba(255,255,255,0.07); }
+    .org-item-name { font-size: 0.88rem; color: rgba(255,255,255,0.7); font-weight: 400; margin-bottom: 0.3rem; }
+    .org-item-type { font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.28); font-weight: 300; margin-bottom: 0.85rem; }
+    .org-item a { font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--sage); font-weight: 500; display: flex; align-items: center; gap: 0.4rem; transition: color 0.2s; }
+    .org-item a:hover { color: var(--mist); }
+
+    @media(max-width:960px) {
+      .ways-section, .form-section, .orgs-section { padding: 4rem 2rem; }
+      .ways-grid { grid-template-columns: 1fr; }
+      .form-inner { grid-template-columns: 1fr; gap: 3rem; }
+      .form-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav scrolled" id="mainNav">
+    <a href="index.html" class="nav-logo">
+      <svg class="nav-logo-mark" viewBox="0 0 32 32" fill="none"><polygon points="16,2 30,28 2,28" fill="none" stroke="rgba(200,222,202,0.55)" stroke-width="1.5"/><polygon points="16,8 26,24 6,24" fill="none" stroke="rgba(200,222,202,0.3)" stroke-width="1"/><polygon points="16,14 22,22 10,22" fill="rgba(200,222,202,0.12)" stroke="rgba(200,222,202,0.45)" stroke-width="1"/></svg>
+      <div class="nav-logo-text"><strong>Bluffland Coalition</strong><span>La Crosse–La Crescent Region</span></div>
+    </a>
+    <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>
+    <ul class="nav-links">
+      <li><a href="our-work.html">Our Work</a></li>
+      <li><a href="land-protection.html">Land Protection</a></li>
+      <li><a href="land-preservation.html">Preservation</a></li>
+      <li><a href="recreation.html">Recreation</a></li>
+      <li><a href="get-involved.html" class="nav-cta active">Get Involved</a></li>
+    </ul>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <div class="page-hero">
+    <div class="page-hero-bg" style="background-image:url('https://www.mississippivalleyconservancy.org/sites/default/files/styles/juicebox_large/public/la-crosse-blufflands.jpg?itok=8zvfGEjE');"></div>
+    <div class="page-hero-overlay"></div>
+    <div class="page-hero-content">
+      <div class="label light"><span class="label-line"></span>Join the Coalition</div>
+      <h1>Get <em>Involved</em></h1>
+      <p>Whether you're a landowner, volunteer, organization, or neighbor who loves these bluffs — there is a meaningful place for you in the Bluffland Coalition's work.</p>
+    </div>
+  </div>
+
+  <!-- WAYS TO HELP -->
+  <section class="ways-section" id="ways">
+    <div class="ways-inner">
+      <div class="reveal">
+        <div class="label"><span class="label-line"></span>How You Can Help</div>
+        <h2 class="section-header" style="font-family:var(--f-display);font-size:clamp(2rem,3.8vw,3.2rem);font-weight:300;color:var(--forest);line-height:1.05;margin-top:0.5rem;letter-spacing:-0.01em;max-width:none;">Three Ways to <em style="font-style:italic;">Make a Difference</em></h2>
+      </div>
+      <div class="ways-grid">
+        <div class="way-card reveal" id="volunteer">
+          <div class="way-icon">🌿</div>
+          <h3 class="way-title">Volunteer</h3>
+          <p class="way-body">Join trail-building crews and habitat restoration workdays organized by ORA Trails, Mississippi Valley Conservancy, and coalition members. No experience needed — just boots, gloves, and enthusiasm. Workdays happen year-round across the blufflands.</p>
+          <a href="https://www.oratrails.org/volunteer/" target="_blank" class="way-link"><span class="way-link-arrow"></span>Sign Up at ORA Trails</a>
+        </div>
+        <div class="way-card reveal reveal-d2">
+          <div class="way-icon">🤝</div>
+          <h3 class="way-title">Partner</h3>
+          <p class="way-body">Organizations and municipalities are welcome to join the coalition by signing the Memorandum of Understanding. We welcome new members who share our commitment to conservation, recreation, and community wellbeing across the region.</p>
+          <a href="#contact" class="way-link"><span class="way-link-arrow"></span>Contact Us to Learn More</a>
+        </div>
+        <div class="way-card reveal reveal-d3">
+          <div class="way-icon">💚</div>
+          <h3 class="way-title">Donate</h3>
+          <p class="way-body">Financial support through our member organizations helps fund land acquisition, trail construction, habitat restoration, and community engagement. Every contribution directly protects and enhances the blufflands for future generations.</p>
+          <a href="https://www.mississippivalleyconservancy.org/ways-give" target="_blank" class="way-link"><span class="way-link-arrow"></span>Give to MV Conservancy</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT FORM -->
+  <section class="form-section" id="contact">
+    <div class="form-inner">
+      <div class="reveal">
+        <div class="label"><span class="label-line"></span>Reach Out</div>
+        <h2>Send Us a <em>Message</em></h2>
+        <p>Questions about volunteering, land conservation, trail access, or coalition membership? We'd love to hear from you.</p>
+        <div class="form-context-details">
+          <div class="form-detail">
+            <div class="form-detail-icon">📍</div>
+            <div>
+              <strong>ORA Trails (Coalition Lead)</strong>
+              <p>119 19th St N, La Crosse, WI 54601<br>PO Box 69, La Crosse, WI 54602</p>
+            </div>
+          </div>
+          <div class="form-detail">
+            <div class="form-detail-icon">✉️</div>
+            <div>
+              <strong>Email</strong>
+              <p><a href="mailto:contact@oratrails.org" style="color:var(--fern);">contact@oratrails.org</a></p>
+            </div>
+          </div>
+          <div class="form-detail">
+            <div class="form-detail-icon">🌲</div>
+            <div>
+              <strong>Mississippi Valley Conservancy</strong>
+              <p><a href="https://www.mississippivalleyconservancy.org/contact-us" target="_blank" style="color:var(--fern);">Contact MVC for land conservation questions</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-form reveal reveal-d2">
+        <div class="form-title">Contact the Coalition</div>
+        <form class="form-grid" onsubmit="submitForm(event)">
+          <div class="form-field">
+            <label for="fname">First Name</label>
+            <input type="text" id="fname" placeholder="Jane" required>
+          </div>
+          <div class="form-field">
+            <label for="lname">Last Name</label>
+            <input type="text" id="lname" placeholder="Smith" required>
+          </div>
+          <div class="form-field full">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" placeholder="you@example.com" required>
+          </div>
+          <div class="form-field full">
+            <label for="org">Organization (optional)</label>
+            <input type="text" id="org" placeholder="Your city, town, or organization">
+          </div>
+          <div class="form-field full">
+            <label for="interest">I'm interested in</label>
+            <select id="interest">
+              <option value="">Select one…</option>
+              <option>Volunteering on trails or restoration</option>
+              <option>Coalition partnership or membership</option>
+              <option>Land conservation or easements</option>
+              <option>Trail information or access</option>
+              <option>Donating or fundraising</option>
+              <option>Press or media inquiry</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="form-field full">
+            <label for="message">Message</label>
+            <textarea id="message" placeholder="Tell us about yourself or your question…"></textarea>
+          </div>
+          <div class="form-submit full">
+            <button type="submit" class="btn btn-forest">
+              Send Message
+              <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+          <div class="form-success full" id="formSuccess">✓ Message sent — we'll be in touch soon.</div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- MEMBER ORG LINKS -->
+  <section class="orgs-section">
+    <div class="orgs-inner">
+      <div class="reveal">
+        <div class="label light"><span class="label-line"></span>Coalition Members</div>
+        <h2 style="font-family:var(--f-display);font-size:clamp(1.8rem,3.2vw,2.8rem);font-weight:300;color:var(--white);line-height:1.05;margin-top:0.5rem;letter-spacing:-0.01em;">Connect with Member Organizations</h2>
+      </div>
+      <div class="orgs-grid reveal reveal-d2">
+        <div class="org-item"><div class="org-item-name">La Crosse County</div><div class="org-item-type">County Government</div><a href="https://www.lacrossecounty.org" target="_blank">lacrossecounty.org <svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H5M10 2v5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
+        <div class="org-item"><div class="org-item-name">City of La Crosse</div><div class="org-item-type">Municipal Government</div><a href="https://www.cityoflacrosse.org" target="_blank">cityoflacrosse.org <svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H5M10 2v5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
+        <div class="org-item"><div class="org-item-name">City of Onalaska</div><div class="org-item-type">Municipal Government</div><a href="https://cityofonalaska.com" target="_blank">cityofonalaska.com <svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H5M10 2v5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
+        <div class="org-item"><div class="org-item-name">City of La Crescent</div><div class="org-item-type">Municipal Government, MN</div><a href="https://www.ci.la-crescent.mn.us" target="_blank">ci.la-crescent.mn.us <svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H5M10 2v5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
+        <div class="org-item"><div class="org-item-name">Town of Shelby</div><div class="org-item-type">Township</div><a href="https://www.lacrossecounty.org" target="_blank">lacrossecounty.org <svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H5M10 2v5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
+        <div class="org-item"><div class="org-item-name">Town of Medary</div><div class="org-item-type">Township</div><a href="https://www.lacrossecounty.org" target="_blank">lacrossecounty.org <svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H5M10 2v5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
+        <div class="org-item"><div class="org-item-name">Town of Holland</div><div class="org-item-type">Township</div><a href="https://www.lacrossecounty.org" target="_blank">lacrossecounty.org <svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H5M10 2v5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
+        <div class="org-item"><div class="org-item-name">LA Planning Committee</div><div class="org-item-type">Regional Planning Body</div><a href="https://www.lacrossecounty.org/planningZoningLandInfo" target="_blank">lacrossecounty.org <svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H5M10 2v5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
+        <div class="org-item"><div class="org-item-name">ORA Trails</div><div class="org-item-type">Nonprofit — Trails</div><a href="https://www.oratrails.org" target="_blank">oratrails.org <svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H5M10 2v5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
+        <div class="org-item"><div class="org-item-name">Mississippi Valley Conservancy</div><div class="org-item-type">Nonprofit — Land Trust</div><a href="https://www.mississippivalleyconservancy.org" target="_blank">mississippivalleyconservancy.org <svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H5M10 2v5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
+        <div class="org-item"><div class="org-item-name">Friends of the Blufflands</div><div class="org-item-type">Nonprofit — Advocacy</div><a href="https://www.oratrails.org/the-bluffland-coalition/" target="_blank">oratrails.org <svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H5M10 2v5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-top">
+      <div><div class="footer-brand-logo"><svg width="26" height="26" viewBox="0 0 32 32" fill="none"><polygon points="16,2 30,28 2,28" fill="none" stroke="rgba(200,222,202,0.45)" stroke-width="1.5"/><polygon points="16,8 26,24 6,24" fill="none" stroke="rgba(200,222,202,0.28)" stroke-width="1"/><polygon points="16,14 22,22 10,22" fill="rgba(200,222,202,0.09)" stroke="rgba(200,222,202,0.38)" stroke-width="1"/></svg><strong>Bluffland Coalition</strong></div><p class="footer-tagline">Conservation and Recreation Throughout the La Crosse–La Crescent Region.</p></div>
+      <div class="footer-col"><strong>Our Work</strong><a href="our-work.html">Latest Updates</a><a href="land-protection.html">Land Protection</a><a href="land-preservation.html">Land Preservation</a><a href="recreation.html">Recreation & Trails</a></div>
+      <div class="footer-col"><strong>Coalition</strong><a href="https://www.oratrails.org" target="_blank">ORA Trails</a><a href="https://www.mississippivalleyconservancy.org" target="_blank">MV Conservancy</a><a href="https://www.lacrossecounty.org" target="_blank">La Crosse County</a><a href="https://www.cityoflacrosse.org" target="_blank">City of La Crosse</a></div>
+      <div class="footer-col"><strong>Connect</strong><a href="get-involved.html">Get Involved</a><a href="get-involved.html#volunteer">Volunteer</a><a href="https://storymaps.arcgis.com/stories/eca0ed26dadb4bbd900627940ebc31ba" target="_blank">2024 Annual Report</a></div>
+    </div>
+    <div class="footer-bottom"><p>© 2025 Bluffland Coalition · La Crosse–La Crescent Region</p><p>Est. 2016</p></div>
+  </footer>
+
+  <script>
+    const obs = new IntersectionObserver(entries => entries.forEach(e => { if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);} }), {threshold:0.08});
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+    document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click', e => { const t=document.querySelector(a.getAttribute('href')); if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth'});} }));
+    function submitForm(e) { e.preventDefault(); const s=document.getElementById('formSuccess'); s.style.display='block'; e.target.reset(); setTimeout(()=>s.style.display='none',6000); }
+  </script>
+</body>
+</html>

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recreation & Trails — Bluffland Coalition</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="shared.css">
+  <style>
+    /* TRAVERSE FEATURE */
+    .traverse-feature { background: var(--forest); padding: 5rem 6rem; }
+    .traverse-feature-inner { max-width: 1160px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+    .traverse-feature h2 { font-family: var(--f-display); font-size: clamp(2.2rem,4vw,3.8rem); font-weight: 300; color: var(--white); line-height: 1.0; margin: 0.5rem 0 1.25rem; letter-spacing: -0.01em; }
+    .traverse-feature h2 em { font-style: italic; color: var(--mist); }
+    .traverse-feature p { font-size: 0.9rem; color: rgba(255,255,255,0.5); font-weight: 300; line-height: 1.85; margin-bottom: 0.9rem; }
+    .traverse-stats-mini { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.06); margin: 2rem 0; }
+    .ts-cell { background: rgba(255,255,255,0.025); padding: 1.1rem; }
+    .ts-val { font-family: var(--f-display); font-size: 1.7rem; font-weight: 600; color: var(--white); line-height: 1; }
+    .ts-key { font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.32); margin-top: 0.22rem; }
+    .traverse-img-wrap { position: relative; overflow: hidden; border-radius: 1px; }
+    .traverse-img-wrap img { width: 100%; display: block; }
+    .traverse-img-placeholder { background: var(--moss); min-height: 380px; display: flex; align-items: center; justify-content: center; }
+    .traverse-img-placeholder img { max-width: 100%; max-height: 380px; object-fit: contain; }
+
+    /* TRAIL CARDS */
+    .trails-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; }
+    .trail-card { background: var(--white); border: 1px solid rgba(0,0,0,0.07); overflow: hidden; transition: box-shadow 0.25s, transform 0.25s; }
+    .trail-card:hover { box-shadow: 0 8px 30px rgba(0,0,0,0.08); transform: translateY(-2px); }
+    .trail-card-header { padding: 1.4rem 1.5rem; border-bottom: 1px solid rgba(0,0,0,0.06); }
+    .trail-card-name { font-family: var(--f-display); font-size: 1.1rem; font-weight: 400; color: var(--forest); margin-bottom: 0.2rem; }
+    .trail-card-loc { font-size: 0.7rem; color: var(--stone-lt); font-weight: 300; letter-spacing: 0.06em; }
+    .trail-card-body { padding: 1.25rem 1.5rem; }
+    .trail-card-body p { font-size: 0.83rem; color: var(--stone); font-weight: 300; line-height: 1.7; margin-bottom: 0.9rem; }
+    .trail-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+    .trail-tag { font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 500; padding: 0.22rem 0.6rem; border: 1px solid rgba(0,0,0,0.1); color: var(--stone); border-radius: 1px; }
+
+    /* SEASONAL */
+    .seasons-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1px; background: rgba(0,0,0,0.07); border: 1px solid rgba(0,0,0,0.07); }
+    .season-card { background: var(--white); padding: 1.75rem 1.5rem; transition: background 0.2s; }
+    .season-card:hover { background: var(--cream); }
+    .season-icon { font-size: 1.8rem; margin-bottom: 0.85rem; }
+    .season-name { font-family: var(--f-display); font-size: 1.15rem; font-weight: 400; color: var(--forest); margin-bottom: 0.5rem; }
+    .season-desc { font-size: 0.82rem; color: var(--stone); font-weight: 300; line-height: 1.7; }
+
+    @media(max-width:960px) {
+      .traverse-feature { padding: 4rem 2rem; }
+      .traverse-feature-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+      .trails-grid { grid-template-columns: 1fr; }
+      .seasons-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media(max-width:600px) { .seasons-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <nav class="nav scrolled" id="mainNav">
+    <a href="index.html" class="nav-logo">
+      <img src="BC_2025_logo_V1.png" alt="Bluffland Coalition" class="nav-logo-mark" style="width:42px;height:42px;object-fit:contain;border-radius:50%;">
+      <div class="nav-logo-text"><strong>Bluffland Coalition</strong><span>La Crosse–La Crescent Region</span></div>
+    </a>
+    <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>
+    <ul class="nav-links">
+      <li><a href="our-work.html">Our Work</a></li>
+      <li><a href="land-protection.html">Land Protection</a></li>
+      <li><a href="land-preservation.html">Preservation</a></li>
+      <li><a href="recreation.html" class="active">Recreation</a></li>
+      <li><a href="get-involved.html" class="nav-cta">Get Involved</a></li>
+    </ul>
+  </nav>
+
+  <div class="page-hero">
+    <div class="page-hero-bg" style="background-image:url('recreation01.jpg');"></div>
+    <div class="page-hero-overlay"></div>
+    <div class="page-hero-content">
+      <div class="label light"><span class="label-line"></span>Trails & Outdoors</div>
+      <h1>Recreation in the <em>Blufflands</em></h1>
+      <p>A growing network of trails, overlooks, and natural areas connecting communities throughout the La Crosse–La Crescent region — for every skill level, every season.</p>
+    </div>
+  </div>
+
+  <!-- TRAVERSE FEATURE -->
+  <section class="traverse-feature">
+    <div class="traverse-feature-inner">
+      <div class="reveal">
+        <div class="label light"><span class="label-line"></span>Signature Route</div>
+        <h2>The Bluffland <em>Traverse</em></h2>
+        <p>A point-to-point route running from the northern end of La Crosse County to the southern end, following the Mississippi River and the bluffs that overlook it.</p>
+        <p>The route connects communities using a combination of single-track, shared-use trail, gravel bike path, and road on public property. ORA Trails is actively working to acquire easements bringing more of the route into the woods and away from traffic.</p>
+        <div class="traverse-stats-mini">
+          <div class="ts-cell"><div class="ts-val">53</div><div class="ts-key">Miles</div></div>
+          <div class="ts-cell"><div class="ts-val">N→S</div><div class="ts-key">Direction</div></div>
+          <div class="ts-cell"><div class="ts-val">All</div><div class="ts-key">Seasons</div></div>
+        </div>
+        <div style="display:flex;gap:0.75rem;flex-wrap:wrap;">
+          <a href="https://www.alltrails.com/explore/map/bluffland-trail-draft-3-4fc8ed9?u=i" target="_blank" class="btn btn-gold">View on AllTrails</a>
+          <a href="https://www.oratrails.org/trails/bluffland-traverse/" target="_blank" class="btn btn-outline-white">ORA Trails Page</a>
+        </div>
+      </div>
+      <div class="traverse-img-wrap reveal reveal-d2">
+        <div class="traverse-img-placeholder">
+          <img src="https://www.oratrails.org/wp-content/uploads/2022/10/Screen-Shot-2022-10-19-at-11.14.40-AM.png" alt="Bluffland Traverse AllTrails map" onerror="this.src='https://www.oratrails.org/wp-content/uploads/2022/08/Bluffland-Trail-.png'">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRAIL NETWORK -->
+  <section class="section alt">
+    <div class="section-inner">
+      <div class="reveal">
+        <div class="label"><span class="label-line"></span>Trail Network</div>
+        <h2 style="font-family:var(--f-display);font-size:clamp(1.8rem,3.2vw,2.8rem);font-weight:300;color:var(--forest);margin-top:0.5rem;letter-spacing:-0.01em;">Trails for Every <em style="font-style:italic;">Adventurer</em></h2>
+        <p style="font-size:0.9rem;color:var(--stone);font-weight:300;line-height:1.8;margin-top:0.75rem;max-width:560px;">The blufflands offer remarkable variety — from easy nature walks to challenging mountain bike climbs — across the La Crosse–La Crescent area.</p>
+      </div>
+      <div class="trails-grid" style="margin-top:2.5rem;">
+        <div class="trail-card reveal">
+          <div class="trail-card-header"><div class="trail-card-name">Hixon Forest</div><div class="trail-card-loc">La Crosse · Multiple access points</div></div>
+          <div class="trail-card-body"><p>One of the most popular urban natural areas in the region, with miles of marked trails through oak woodland and bluffside terrain. Trails graded green/blue/black by difficulty.</p><div class="trail-tags"><span class="trail-tag">🥾 Hiking</span><span class="trail-tag">🚵 MTB</span><span class="trail-tag">🎿 XC Ski</span><span class="trail-tag">All levels</span></div></div>
+        </div>
+        <div class="trail-card reveal reveal-d1">
+          <div class="trail-card-header"><div class="trail-card-name">Quarry Trail (Cty Rd FA)</div><div class="trail-card-loc">Town of Medary · 453 acres</div></div>
+          <div class="trail-card-body"><p>Reconstructed prairie and beautiful driftless landscapes at the Mathy Quarry property. Picnic tables at the weather station trailhead make it great for families.</p><div class="trail-tags"><span class="trail-tag">🥾 Hiking</span><span class="trail-tag">🏃 Trail Run</span><span class="trail-tag">❄️ Winter</span></div></div>
+        </div>
+        <div class="trail-card reveal reveal-d2">
+          <div class="trail-card-header"><div class="trail-card-name">Miller Bluff</div><div class="trail-card-loc">Rim of the City Rd · La Crosse</div></div>
+          <div class="trail-card-body"><p>Spectacular bluff-top trail with sandstone promontories offering sweeping views of the city and river. Excellent for birding — watch for bald eagles and hawks on thermals.</p><div class="trail-tags"><span class="trail-tag">🥾 Hiking</span><span class="trail-tag">🦅 Birding</span><span class="trail-tag">📸 Views</span><span class="trail-tag">Moderate</span></div></div>
+        </div>
+        <div class="trail-card reveal">
+          <div class="trail-card-header"><div class="trail-card-name">Crown Boulevard Trailhead</div><div class="trail-card-loc">South La Crosse</div></div>
+          <div class="trail-card-body"><p>A moderate hike through remote bluffland to overlooks and stunning rock formations. Home to rare native plants including amethyst shooting star, bloodroot, and pasqueflower.</p><div class="trail-tags"><span class="trail-tag">🥾 Hiking</span><span class="trail-tag">🌸 Wildflowers</span><span class="trail-tag">Moderate</span></div></div>
+        </div>
+        <div class="trail-card reveal reveal-d1">
+          <div class="trail-card-header"><div class="trail-card-name">County Rd B Trailhead</div><div class="trail-card-loc">Onalaska · W5845 Cty Rd B</div></div>
+          <div class="trail-card-body"><p>Located just north of Onalaska off Hwy 16. An out-and-back hike climbing the bluffs with parking at the roadside kiosk. Beginner-friendly with marked trail boundaries.</p><div class="trail-tags"><span class="trail-tag">🥾 Hiking</span><span class="trail-tag">Beginner</span></div></div>
+        </div>
+        <div class="trail-card reveal reveal-d2">
+          <div class="trail-card-header"><div class="trail-card-name">Halfway Creek Trail</div><div class="trail-card-loc">Holmen · Northern corridor</div></div>
+          <div class="trail-card-body"><p>Part of the northern reach of the Bluffland Traverse, connecting Holmen toward Onalaska along the base of the bluffs. A key link in the growing regional network.</p><div class="trail-tags"><span class="trail-tag">🥾 Hiking</span><span class="trail-tag">🚴 Biking</span><span class="trail-tag">Traverse</span></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEASONAL -->
+  <section class="section">
+    <div class="section-inner">
+      <div class="reveal">
+        <div class="label"><span class="label-line"></span>Plan Your Visit</div>
+        <h2 style="font-family:var(--f-display);font-size:clamp(1.8rem,3.2vw,2.8rem);font-weight:300;color:var(--forest);margin-top:0.5rem;letter-spacing:-0.01em;">Year-Round <em style="font-style:italic;">Adventure</em></h2>
+      </div>
+      <div class="seasons-grid reveal reveal-d2" style="margin-top:2.5rem;">
+        <div class="season-card"><div class="season-icon">🌸</div><div class="season-name">Spring</div><div class="season-desc">Wildflowers burst across bluff prairies. Migratory birds return in force. Ideal for guided hikes and birding walks on the ridgelines.</div></div>
+        <div class="season-card"><div class="season-icon">☀️</div><div class="season-name">Summer</div><div class="season-desc">Full canopy shade on the trails. Peak wildflower season continues into late summer with volunteer restoration days and family outings.</div></div>
+        <div class="season-card"><div class="season-icon">🍂</div><div class="season-name">Autumn</div><div class="season-desc">Stunning fall color along bluffs and the Mississippi valley. Prime hawk-watching season from overlooks. Crisp conditions for hiking and biking.</div></div>
+        <div class="season-card"><div class="season-icon">❄️</div><div class="season-name">Winter</div><div class="season-desc">Many trails open for snowshoeing and cross-country skiing. The snow-covered bluffs offer a quiet, dramatic beauty unique to the Upper Mississippi Valley.</div></div>
+      </div>
+      <div style="margin-top:2.5rem;padding:2rem 2.25rem;background:var(--parchment);border:1px solid rgba(0,0,0,0.07);" class="reveal">
+        <p style="font-size:0.85rem;color:var(--stone);font-weight:300;line-height:1.8;"><strong style="color:var(--forest);font-weight:500;">Trail Use Notes:</strong> Trails are marked with green (easy), blue (intermediate), and black (advanced) markers. For maps and current conditions, contact the City of La Crosse Parks & Recreation Department at <a href="tel:608-789-7533" style="color:var(--fern);">608-789-7533</a> or visit <a href="https://www.cityoflacrosse.org/your-government/departments/parks-recreation-forestry/outdoor-recreation/trails" target="_blank" style="color:var(--fern);">City Trail Maps</a>.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-top">
+      <div><div class="footer-brand-logo"><img src="BC_2025_logo_V1.png" alt="Bluffland Coalition" style="width:44px;height:44px;object-fit:contain;border-radius:50%;"><strong>Bluffland Coalition</strong></div><p class="footer-tagline">Conservation and Recreation Throughout the La Crosse–La Crescent Region.</p></div>
+      <div class="footer-col"><strong>Our Work</strong><a href="our-work.html">Latest Updates</a><a href="land-protection.html">Land Protection</a><a href="land-preservation.html">Land Preservation</a><a href="recreation.html">Recreation & Trails</a></div>
+      <div class="footer-col"><strong>Coalition</strong><a href="https://www.oratrails.org" target="_blank">ORA Trails</a><a href="https://www.mississippivalleyconservancy.org" target="_blank">MV Conservancy</a><a href="https://www.lacrossecounty.org" target="_blank">La Crosse County</a><a href="https://www.cityoflacrosse.org" target="_blank">City of La Crosse</a></div>
+      <div class="footer-col"><strong>Connect</strong><a href="get-involved.html">Get Involved</a><a href="get-involved.html#volunteer">Volunteer</a><a href="https://storymaps.arcgis.com/stories/eca0ed26dadb4bbd900627940ebc31ba" target="_blank">2024 Annual Report</a></div>
+    </div>
+    <div class="footer-bottom"><p>© 2025 Bluffland Coalition · La Crosse–La Crescent Region</p><p>Est. 2016</p></div>
+  </footer>
+  <script>
+    const obs = new IntersectionObserver(entries => entries.forEach(e => { if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);} }), {threshold:0.08});
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+  </script>
+</body>
+</html>

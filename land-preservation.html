@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Land Preservation — Bluffland Coalition</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="shared.css">
+  <style>
+    .content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+    .prose h3 { font-family: var(--f-display); font-size: clamp(1.6rem,2.8vw,2.4rem); font-weight: 300; color: var(--forest); line-height: 1.1; margin-bottom: 1rem; letter-spacing: -0.01em; }
+    .prose h3 em { font-style: italic; }
+    .prose p { font-size: 0.9rem; color: var(--stone); font-weight: 300; line-height: 1.85; margin-bottom: 0.9rem; }
+    .visual-block { border-radius: 1px; overflow: hidden; background: var(--forest); }
+    .visual-placeholder { min-height: 320px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; padding: 2rem; text-align: center; }
+    .visual-placeholder span { font-size: 3rem; opacity: 0.3; }
+    .visual-placeholder p { font-size: 0.8rem; color: rgba(255,255,255,0.3); font-weight: 300; line-height: 1.6; max-width: 240px; }
+    .habitat-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 1px; background: rgba(0,0,0,0.07); border: 1px solid rgba(0,0,0,0.07); margin-top: 2.5rem; }
+    .habitat-item { background: var(--cream); padding: 1.6rem 1.5rem; transition: background 0.2s; }
+    .habitat-item:hover { background: var(--white); }
+    .habitat-icon { font-size: 1.6rem; margin-bottom: 0.6rem; }
+    .habitat-name { font-family: var(--f-display); font-size: 1.05rem; font-weight: 400; color: var(--forest); margin-bottom: 0.4rem; }
+    .habitat-desc { font-size: 0.82rem; color: var(--stone); font-weight: 300; line-height: 1.65; }
+    .goals-band { background: var(--forest); padding: 4rem 6rem; }
+    .goals-band-inner { max-width: 1160px; margin: 0 auto; }
+    .goals-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.06); margin-top: 2.5rem; }
+    .goal-item { background: rgba(255,255,255,0.025); padding: 1.5rem; }
+    .goal-num { font-family: var(--f-display); font-size: 0.72rem; color: var(--gold-pale); margin-bottom: 0.4rem; opacity: 0.7; }
+    .goal-title { font-size: 0.88rem; color: rgba(255,255,255,0.75); font-weight: 500; margin-bottom: 0.35rem; }
+    .goal-body { font-size: 0.78rem; color: rgba(255,255,255,0.38); font-weight: 300; line-height: 1.65; }
+    @media(max-width:960px) { .content-grid { grid-template-columns: 1fr; } .habitat-grid { grid-template-columns: 1fr; } .goals-band { padding: 4rem 2rem; } .goals-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <nav class="nav scrolled" id="mainNav">
+    <a href="index.html" class="nav-logo">
+      <img src="BC_2025_logo_V1.png" alt="Bluffland Coalition" class="nav-logo-mark" style="width:42px;height:42px;object-fit:contain;border-radius:50%;">
+      <div class="nav-logo-text"><strong>Bluffland Coalition</strong><span>La Crosse–La Crescent Region</span></div>
+    </a>
+    <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>
+    <ul class="nav-links">
+      <li><a href="our-work.html">Our Work</a></li>
+      <li><a href="land-protection.html">Land Protection</a></li>
+      <li><a href="land-preservation.html" class="active">Preservation</a></li>
+      <li><a href="recreation.html">Recreation</a></li>
+      <li><a href="get-involved.html" class="nav-cta">Get Involved</a></li>
+    </ul>
+  </nav>
+
+  <div class="page-hero">
+    <div class="page-hero-bg" style="background-image:url('https://www.mississippivalleyconservancy.org/sites/default/files/styles/juicebox_large/public/cardinal-bluff.jpg?itok=ErBzlhX-');"></div>
+    <div class="page-hero-overlay"></div>
+    <div class="page-hero-content">
+      <div class="label light"><span class="label-line"></span>Our Work</div>
+      <h1>Land <em>Preservation</em></h1>
+      <p>Protecting land is just the beginning. Restoring native habitats, managing invasive species, and stewarding the ecological health of the blufflands is an ongoing, community-wide commitment.</p>
+    </div>
+  </div>
+
+  <!-- INTRO -->
+  <section class="section">
+    <div class="section-inner">
+      <div class="content-grid reveal">
+        <div class="prose">
+          <div class="label"><span class="label-line"></span>Active Stewardship</div>
+          <h3>Protecting Land Is Just the <em>Beginning</em></h3>
+          <p>Acquiring land is an important first step, but the ongoing ecological health of the blufflands requires active, long-term stewardship. Native bluff prairies, oak woodlands, and sandstone cliff communities are under constant pressure from invasive plant species and decades of altered land use.</p>
+          <p>The coalition coordinates restoration initiatives to manage invasive species like buckthorn and honeysuckle, reestablish native plant communities, and maintain the biodiversity that makes this landscape so remarkable.</p>
+          <p>Hundreds of volunteers spend Saturday afternoons building trails, clearing invasive species, and restoring native habitat — a community effort that reflects deep local pride in this landscape.</p>
+          <a href="get-involved.html#volunteer" class="btn btn-outline" style="margin-top:0.5rem;">Join a Workday</a>
+        </div>
+        <div class="visual-block">
+          <img src="https://www.mississippivalleyconservancy.org/sites/default/files/styles/juicebox_large/public/cardinal-bluff.jpg?itok=ErBzlhX-" alt="Cardinal Bluff woodland" onerror="this.parentNode.innerHTML='<div class=\'visual-placeholder\'><span>🌳</span><p>Cardinal Bluff — oak woodlands and bluff prairies of the La Crosse blufflands</p></div>'">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HABITATS -->
+  <section class="section alt">
+    <div class="section-inner">
+      <div class="reveal">
+        <div class="label"><span class="label-line"></span>What We Restore</div>
+        <h2 style="font-family:var(--f-display);font-size:clamp(1.8rem,3.2vw,2.8rem);font-weight:300;color:var(--forest);margin-top:0.5rem;letter-spacing:-0.01em;">Rare Habitats of the <em style="font-style:italic;">Upper Mississippi</em></h2>
+        <p style="font-size:0.9rem;color:var(--stone);font-weight:300;line-height:1.8;margin-top:0.75rem;max-width:560px;">The blufflands contain natural communities found nowhere else in the region — each requiring different approaches to restoration and stewardship.</p>
+      </div>
+      <div class="habitat-grid reveal reveal-d2">
+        <div class="habitat-item"><div class="habitat-icon">🌼</div><div class="habitat-name">Bluff Prairies</div><div class="habitat-desc">Rare native prairie communities on dry, south-facing slopes. Home to compass plant, butterfly milkweed, leadplant, and pasqueflower. Threatened by woody encroachment without active management.</div></div>
+        <div class="habitat-item"><div class="habitat-icon">🌳</div><div class="habitat-name">Oak Woodlands & Savannas</div><div class="habitat-desc">Ancient bur and white oak ecosystems once covering blufftops. Restoration removes invasive shrubs and reintroduces prescribed fire to revive these fire-dependent communities.</div></div>
+        <div class="habitat-item"><div class="habitat-icon">🪨</div><div class="habitat-name">Sandstone Cliff Communities</div><div class="habitat-desc">Unique plant communities on exposed sandstone outcrops. Sensitive to disturbance; harbor rare mosses, ferns, and cliff-dwelling species found throughout the driftless area.</div></div>
+        <div class="habitat-item"><div class="habitat-icon">🦅</div><div class="habitat-name">Wildlife Corridors</div><div class="habitat-desc">Connected natural areas allow bald eagles, hawks, turkey vultures, white-tailed deer, and dozens of species to move freely through the landscape.</div></div>
+        <div class="habitat-item"><div class="habitat-icon">🚫</div><div class="habitat-name">Invasive Species Control</div><div class="habitat-desc">Common buckthorn, honeysuckle, and other invasives suppress native species. Volunteers and staff work year-round to manage these persistent threats across the region.</div></div>
+        <div class="habitat-item"><div class="habitat-icon">🌊</div><div class="habitat-name">Watershed Health</div><div class="habitat-desc">Healthy bluffland vegetation protects water quality in streams flowing to the Mississippi River, reduces erosion, and buffers communities from flooding.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SIX GOALS -->
+  <div class="goals-band">
+    <div class="goals-band-inner">
+      <div class="reveal">
+        <div class="label light"><span class="label-line"></span>The 2016 Blufflands Plan</div>
+        <h2 style="font-family:var(--f-display);font-size:clamp(1.8rem,3vw,2.6rem);font-weight:300;color:var(--white);margin-top:0.5rem;letter-spacing:-0.01em;">Six Goals for <em style="font-style:italic;color:var(--mist);">a Thriving Region</em></h2>
+      </div>
+      <div class="goals-grid reveal reveal-d2">
+        <div class="goal-item"><div class="goal-num">01</div><div class="goal-title">Public Health</div><div class="goal-body">Improve outdoor access and active recreation for all residents and visitors.</div></div>
+        <div class="goal-item"><div class="goal-num">02</div><div class="goal-title">Ecological Diversity</div><div class="goal-body">Restore and protect native plant and wildlife communities across the blufflands.</div></div>
+        <div class="goal-item"><div class="goal-num">03</div><div class="goal-title">Connected Communities</div><div class="goal-body">Link cities, towns, and natural areas through a continuous trail network.</div></div>
+        <div class="goal-item"><div class="goal-num">04</div><div class="goal-title">Economic Strength</div><div class="goal-body">Attract workforce, tourism, and investment through exceptional natural assets.</div></div>
+        <div class="goal-item"><div class="goal-num">05</div><div class="goal-title">Quality of Life</div><div class="goal-body">Ensure these lands remain accessible and meaningful for future generations.</div></div>
+        <div class="goal-item"><div class="goal-num">06</div><div class="goal-title">Regional Coordination</div><div class="goal-body">Unite public and private stakeholders under a shared, long-term conservation plan.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <section class="section">
+    <div class="section-inner" style="display:flex;justify-content:space-between;align-items:center;gap:3rem;flex-wrap:wrap;" class="reveal">
+      <div class="reveal">
+        <div class="label"><span class="label-line"></span>Get Hands-On</div>
+        <h2 style="font-family:var(--f-display);font-size:clamp(1.8rem,3.2vw,2.8rem);font-weight:300;color:var(--forest);margin-top:0.5rem;letter-spacing:-0.01em;">Become a Bluffland <em style="font-style:italic;">Steward</em></h2>
+        <p style="font-size:0.88rem;color:var(--stone);margin-top:0.75rem;font-weight:300;line-height:1.7;max-width:440px;">No experience needed. Just show up — and you'll leave with muddy hands and a deeper connection to this remarkable landscape.</p>
+      </div>
+      <div style="display:flex;gap:0.75rem;flex-wrap:wrap;flex-shrink:0;" class="reveal reveal-d2">
+        <a href="https://www.oratrails.org/volunteer/" target="_blank" class="btn btn-forest">Volunteer with ORA Trails</a>
+        <a href="https://www.mississippivalleyconservancy.org/volunteer" target="_blank" class="btn btn-outline">Volunteer with MVC</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-top">
+      <div><div class="footer-brand-logo"><img src="BC_2025_logo_V1.png" alt="Bluffland Coalition" style="width:44px;height:44px;object-fit:contain;border-radius:50%;"><strong>Bluffland Coalition</strong></div><p class="footer-tagline">Conservation and Recreation Throughout the La Crosse–La Crescent Region.</p></div>
+      <div class="footer-col"><strong>Our Work</strong><a href="our-work.html">Latest Updates</a><a href="land-protection.html">Land Protection</a><a href="land-preservation.html">Land Preservation</a><a href="recreation.html">Recreation & Trails</a></div>
+      <div class="footer-col"><strong>Coalition</strong><a href="https://www.oratrails.org" target="_blank">ORA Trails</a><a href="https://www.mississippivalleyconservancy.org" target="_blank">MV Conservancy</a><a href="https://www.lacrossecounty.org" target="_blank">La Crosse County</a><a href="https://www.cityoflacrosse.org" target="_blank">City of La Crosse</a></div>
+      <div class="footer-col"><strong>Connect</strong><a href="get-involved.html">Get Involved</a><a href="get-involved.html#volunteer">Volunteer</a><a href="https://storymaps.arcgis.com/stories/eca0ed26dadb4bbd900627940ebc31ba" target="_blank">2024 Annual Report</a></div>
+    </div>
+    <div class="footer-bottom"><p>© 2025 Bluffland Coalition · La Crosse–La Crescent Region</p><p>Est. 2016</p></div>
+  </footer>
+  <script>
+    const obs = new IntersectionObserver(entries => entries.forEach(e => { if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);} }), {threshold:0.08});
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+  </script>
+</body>
+</html>
